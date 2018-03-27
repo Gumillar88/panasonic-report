@@ -1,0 +1,508 @@
+<?php
+namespace Tests\Controllers\API\V_1_5_0;
+
+use Hash;
+use TestCase;
+
+use Illuminate\Foundation\Testing\WithoutMiddleware;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+
+use App\Http\Models\DealerModel;
+use App\Http\Models\PromotorModel;
+use App\Http\Models\TokenModel;
+use App\Http\Models\ReportStockModel;
+use App\Http\Models\ProductModel;
+use App\Http\Models\ProductCategoryModel;
+
+class StockControllerTest extends TestCase
+{
+    use WithoutMiddleware;
+    
+    /**
+     * Dealer model container
+     *
+     * @access protected
+     */
+    protected $dealer;
+    
+    /**
+     * Promotor model container
+     *
+     * @access protected
+     */
+    protected $promotor;
+    
+    /**
+     * Token model container
+     *
+     * @access protected
+     */
+    protected $token;
+
+    /**
+     * Report Stock model container
+     *
+     * @access protected
+     */
+    protected $stock;
+
+    /**
+     * Product category model container
+     *
+     * @access Protected
+     */
+    protected $productCategory;
+    
+    /**
+     * Product model container
+     *
+     * @access Protected
+     */
+    protected $product;
+    
+    /**
+     * Promotor data sample
+     *
+     * @access protected
+     */
+    protected $promotorData = [
+        'dealer_ID'     => 1,
+        'phone'         => '+6280010003000',
+        'phoneNormal'   => '080010003000',
+        'password'      => '1234',
+        'name'          => 'Alfian',
+        'gender'        => 'male',
+        'type'          => 'promotor',
+        'parent_ID'     => 0,
+    ];
+
+    /**
+     * Dealer data sample
+     *
+     * @access protected
+     */
+    protected $dealerData = [
+        'region_ID' => 1,
+        'branch_ID' => 1,
+        'dealer_account_ID' => 1,
+        'dealer_type_ID' => 1,
+        'dealer_channel_ID' => 1,
+        'code' => 1,
+        'name' => 'BALI ELECTRONIC CENTER',
+        'company' => 'none',
+        'address' => 'none'
+    ];
+
+    /**
+     * Product category data sample
+     *
+     * @access protected
+     */
+    protected $productCategoryData = [
+        'name'  => 'Meja',
+    ];
+
+    /**
+     * Product data sample
+     *
+     * @access protected
+     */
+    protected $productData = [
+        'product_category_ID'   => 1,
+        'name'                  => 'Meja 1',
+        'price'                 => 0,
+    ];
+
+    /**
+     * Stock data sample
+     *
+     * @access protected
+     */
+    protected $stockData = [
+        'promotor_ID'           => 1,
+        'dealer_ID'             => 1,
+        'product_model_ID'      => 1,
+    ];
+
+    
+    /**
+     * Object constructor
+     *
+     * @access public
+     * @return Void
+     */
+    public function __construct()
+    {
+        $this->dealer           = new DealerModel();
+        $this->promotor         = new PromotorModel();
+        $this->token            = new TokenModel();
+        $this->stock            = new ReportStockModel();
+        $this->productCategory  = new ProductCategoryModel();
+        $this->product          = new ProductModel();
+    }
+    
+    /**
+     * Populate promotor database with promotor data
+     *
+     * @access private
+     * @return Integer
+     */
+    private function _populatePromotor()
+    {
+        return $this->promotor->create(
+            $this->promotorData['dealer_ID'], 
+            $this->promotorData['phone'], 
+            Hash::make($this->promotorData['password']), 
+            $this->promotorData['name'], 
+            $this->promotorData['gender'], 
+            $this->promotorData['type'], 
+            $this->promotorData['parent_ID']
+        );
+    }
+
+    /**
+     * Populate product category database with productcategory data
+     *
+     * @access private
+     * @return Integer
+     */
+    private function _populateProductCategory()
+    {
+        return $this->productCategory->create(
+            $this->productCategoryData['name']
+        );
+    }
+
+    /**
+     * Populate product database with product data
+     *
+     * @access private
+     * @return Integer
+     */
+    private function _populateProduct()
+    {
+        return $this->product->create(
+            $this->productData['product_category_ID'],
+            $this->productData['name'],
+            $this->productData['price']
+        );
+    }
+
+    /**
+     * Populate dealer database with dealer data
+     *
+     * @access private
+     * @return Integer
+     */
+    private function _populateDealer()
+    {
+        return $this->dealer->create($this->dealerData);
+    }
+
+    /**
+     * Populate stock database with stock data
+     *
+     * @access private
+     * @return Integer
+     */
+    private function _populateStock()
+    {
+        return $this->stock->create(
+            $this->stockData['promotor_ID'], 
+            $this->stockData['dealer_ID'], 
+            $this->stockData['product_model_ID']
+        );
+    }
+
+    /**
+     * Test Stock list with no token
+     *
+     * @access public
+     * @group API
+     * @group API-1.5.0
+     * @group API-1.5.0-StockController
+     * @return Void
+     */
+    public function testStockListNoToken()
+    {
+        // Do Request
+        $this->_request('GET', '/api/1.5.0/stock-empty-list')
+            ->_result(['error' => 'no-token']);
+    }
+    
+    /**
+     * Test Stock list with no promotor
+     *
+     * @access public
+     * @group API
+     * @group API-1.5.0
+     * @group API-1.5.0-StockController
+     * @return Void
+     */
+    public function testStockListNoPromotor()
+    {
+        // Do Request
+        $this->_request('GET', '/api/1.5.0/stock-empty-list', ['token' => '1234'])
+            ->_result(['error' => 'no-auth']);
+    }
+
+    /**
+     * Test Stock list with no dealer
+     *
+     * @access public
+     * @group API
+     * @group API-1.5.0
+     * @group API-1.5.0-StockController
+     * @return Void
+     */
+    public function testStockListNoDealer()
+    {
+        // Populate data
+        $promotorID = $this->_populatePromotor();
+        $productCategoryID = $this->_populateProductCategory();
+        $productID = $this->_populateProduct();
+
+        // Create token
+        $token = str_random(5);
+        $encryptedToken = $this->token->encode($promotorID, $token);
+
+        // Do Request
+        $this->_request('GET', '/api/1.5.0/stock-empty-list', ['token' => $encryptedToken])
+            ->_result(['error' => 'no-dealer']);
+    }
+
+    /**
+     * Test Stock list with promotor
+     *
+     * @access public
+     * @group API
+     * @group API-1.5.0
+     * @group API-1.5.0-StockController
+     * @return Void
+     */
+    public function testStockListWithPromotor()
+    {
+        // Populate data
+        $promotorID = $this->_populatePromotor();
+        $dealerID = $this->_populateDealer();
+        $productCategoryID = $this->_populateProductCategory();
+        $productID = $this->_populateProduct();
+        
+        // Create token
+        $token = str_random(5);
+        $encryptedToken = $this->token->encode($promotorID, $token);
+
+        $params = [
+            'token' => $encryptedToken 
+        ];
+
+        // Do request
+        $response   = $this->call('GET', '/api/1.5.0/stock-empty-list', $params);
+        $result     = json_decode($response->getContent(), true);
+
+        // Verify
+        $this->assertTrue(array_key_exists('store', $result));
+        $this->assertTrue(array_key_exists('result', $result));
+
+    }
+
+    /**
+     * Test Stock create with no token
+     *
+     * @access public
+     * @group API
+     * @group API-1.5.0
+     * @group API-1.5.0-StockController
+     * @return Void
+     */
+    public function testStockCreateNoToken()
+    {
+        // Do Request
+        $this->_request('POST', '/api/1.5.0/stock-empty-create')
+            ->_result(['error' => 'no-token']);
+    }
+
+    /**
+     * Test Stock Create with no product id
+     *
+     * @access public
+     * @group API
+     * @group API-1.5.0
+     * @group API-1.5.0-StockController
+     * @return Void
+     */
+    public function testStockCreateNoProductID()
+    {
+        // Do Request
+        $this->_request('POST', '/api/1.5.0/stock-empty-create',['token' => '1234'])
+            ->_result(['error' => 'no-product-id']);
+    }
+
+    /**
+     * Test Stock Create with invalid token
+     *
+     * @access public
+     * @group API
+     * @group API-1.5.0
+     * @group API-1.5.0-StockController
+     * @return Void
+     */
+    public function testStockCreateWithInvalidToken()
+    {
+        // Do Request
+        $this->_request('POST', '/api/1.5.0/stock-empty-create',['token' => '1234','productID' => 1])
+            ->_result(['error' => 'no-auth']);
+    }
+
+    /**
+     * Test Stock Create with no dealer
+     *
+     * @access public
+     * @group API
+     * @group API-1.5.0
+     * @group API-1.5.0-StockController
+     * @return Void
+     */
+    public function testStockCreateAlreadyDataProduct()
+    {
+        // Populate data
+        $promotorID = $this->_populatePromotor();
+        $stockID = $this->_populateStock();
+
+        // Create token
+        $token = str_random(5);
+        $encryptedToken = $this->token->encode($promotorID, $token);
+
+        // Do Request
+        $this->_request('POST', '/api/1.5.0/stock-empty-create', ['token' => $encryptedToken, 'productID' => 1])
+            ->_result(['error' => 'report-stock-data-already']);
+    }
+
+    /**
+     * Test Stock create valid data
+     *
+     * @access public
+     * @group API
+     * @group API-1.5.0
+     * @group API-1.5.0-StockController
+     * @return Void
+     */
+    public function testStockCreateWithValidData()
+    {
+        // Populate data
+        $promotorID = $this->_populatePromotor();
+        
+        // Create token
+        $token = str_random(5);
+        $encryptedToken = $this->token->encode($promotorID, $token);
+
+        $params = [
+            'token' => $encryptedToken, 
+            'productID' => 1 
+        ];
+
+        // Do request
+        $response   = $this->call('POST', '/api/1.5.0/stock-empty-create', $params);
+        $result     = json_decode($response->getContent(), true);
+
+        // Verify
+        $this->assertTrue(array_key_exists('result', $result));
+
+    }
+
+    /**
+     * Test Stock Update with no token
+     *
+     * @access public
+     * @group API
+     * @group API-1.5.0
+     * @group API-1.5.0-StockController
+     * @return Void
+     */
+    public function testStockUpdateNoToken()
+    {
+        // Do Request
+        $this->_request('POST', '/api/1.5.0/stock-empty-update')
+            ->_result(['error' => 'no-token']);
+    }
+
+    /**
+     * Test update Create with no product id
+     *
+     * @access public
+     * @group API
+     * @group API-1.5.0
+     * @group API-1.5.0-StockController
+     * @return Void
+     */
+    public function testStockupdateNoProductID()
+    {
+        // Do Request
+        $this->_request('POST', '/api/1.5.0/stock-empty-update',['token' => '1234'])
+            ->_result(['error' => 'no-product-id']);
+    }
+
+    /**
+     * Test Stock update with invalid token
+     *
+     * @access public
+     * @group API
+     * @group API-1.5.0
+     * @group API-1.5.0-StockController
+     * @return Void
+     */
+    public function testStockUpdateWithInvalidToken()
+    {
+        // Do Request
+        $this->_request('POST', '/api/1.5.0/stock-empty-update',['token' => '1234','productID' => 1])
+            ->_result(['error' => 'no-auth']);
+    }
+
+    /**
+     * Test Stock update with no dealer
+     *
+     * @access public
+     * @group API
+     * @group API-1.5.0
+     * @group API-1.5.0-StockController
+     * @return Void
+     */
+    public function testStockUpdateAlreadyDataProduct()
+    {
+        // Populate data
+        $promotorID = $this->_populatePromotor();
+
+        // Create token
+        $token = str_random(5);
+        $encryptedToken = $this->token->encode($promotorID, $token);
+
+        // Do Request
+        $this->_request('POST', '/api/1.5.0/stock-empty-update', ['token' => $encryptedToken, 'productID' => 1])
+            ->_result(['error' => 'data-not-found']);
+    }
+
+    /**
+     * Test Stock update with valid data
+     *
+     * @access public
+     * @group API
+     * @group API-1.5.0
+     * @group API-1.5.0-StockController
+     * @return Void
+     */
+    public function testStockUpdateValidData()
+    {
+        // Populate data
+        $promotorID = $this->_populatePromotor();
+        $stockID = $this->_populateStock();
+
+        // Create token
+        $token = str_random(5);
+        $encryptedToken = $this->token->encode($promotorID, $token);
+
+        // Do Request
+        $this->_request('POST', '/api/1.5.0/stock-empty-update', ['token' => $encryptedToken, 'productID' => 1])
+            ->_result(['result' => 'success']);
+    }
+}

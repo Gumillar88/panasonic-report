@@ -1,0 +1,576 @@
+/**
+ * Helper class
+ */
+.hide {
+    display: none !important;
+}
+
+.clear{
+    clear:both;
+}
+
+.left{
+    float:left;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.form-control {
+    margin-bottom: 10px;
+}
+
+.btn,
+.btn:hover,
+.btn:visited,
+.btn:active {
+    display: inline-block;
+    margin: 0px 2px;
+    background: rgb(15,88,168);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    line-height: 30px;
+    padding: 0px 10px;
+    border: 1px solid;
+    cursor: pointer;
+}
+
+/**
+ * Container
+ */
+#container {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+}
+
+/**
+ * Chart section
+ */
+#chart {
+    position: relative;
+    float: left;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+#chart .loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    font-size: 150px;
+    color: #ccc;
+    background: rgba(255, 255, 255, 0.5);
+    z-index: 9999;
+}
+
+#chart .loading .fa {
+    position: absolute;
+    top: 50%;
+    margin-top: -70px;
+}
+
+#chart section {
+    position: relative;
+    width: 100%;
+    height: 49%;
+    border-bottom: 1px solid #ccc;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+#chart section:last-child {
+    border-bottom: none;
+}
+
+#chart section h1 {
+    font-size: 20px;
+    margin: 0px;
+    padding: 10px;
+}
+
+#chart section .chart-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 60px 20px 20px;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+
+#chart section .chart-wrapper span {
+  position: absolute;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+
+#chart section .chart-wrapper #sales-chart canvas {
+    width: 100%;
+    height: 100%;
+}
+
+#chart section .chart-wrapper #sales-chart{
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+#chart .sales-total .options {
+    position: absolute;
+    top: 20px;
+    left: 100px;
+    z-index: 999;
+}
+
+#chart .sales-total .filter {
+    padding-left: 10px;
+    float: right;
+}
+
+#chart .sales-total .filter label {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+#chart .sales-total .filter select {
+    display: inline-block;
+    width: 150px;
+}
+
+#chart .sales-total .chart-wrapper span {
+    bottom: 20px;
+    right: 20px;
+}
+
+#chart .sales-detail h2 {
+    font-size: 16px;
+    margin: 0;
+    padding: 0px 20px;
+}
+
+#chart .sales-detail .part {
+    position: relative;
+    float: left;
+    height: 100%;
+}
+
+#chart .sales-detail .account-chart {
+    width: 40%;
+}
+
+#chart .sales-detail .product-chart {
+    width: 30%;
+}
+
+#chart .sales-detail .product-detail {
+    width: 30%;
+    overflow: auto;
+}
+
+#chart .sales-detail .product-detail .category {
+    font-size: 12px;
+}
+
+
+#chart .sales-detail .chart-wrapper {
+    padding: 40px 20px 0px;
+}
+
+#chart .sales-detail .product-chart .chart-wrapper  {
+    position: relative;
+    padding: 10px 20px 0px;
+    height: 45%;
+}
+
+#chart .sales-detail .chart-wrapper .btn {
+    position: absolute;
+    font-size: 12px;
+    font-weight: bold;
+    top: 0px;
+    right: 20px;
+}
+
+#chart .product-detail table {
+    width: 100%;  
+    margin-top: 5px;
+}
+
+#chart .product-detail table tr {
+    border: 1px solid #ccc;
+}
+
+#chart .product-detail table tr td {
+    position: relative;
+    width: 50%;  
+    padding: 10px 10px 10px 20px;
+    box-sizing: border-box;
+    border-right: 1px solid #ccc;
+}
+
+#chart .product-detail table tr td.item:hover {
+    background: rgb(15,88,168);
+    cursor: pointer;
+    color: white;
+    border: 1px solid rgb(15,88,168);
+}
+
+#chart .product-detail table tr td .color {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 10px;
+    height: 100%;
+}
+
+#chart .product-detail table tr td .value {
+    font-size: 12px;
+}
+
+#chart .product-detail table tr td .value span {
+    font-size: 12px;
+    font-weight: bold;
+    color: #aaa;
+}
+
+#chart .product-detail table tr td .value  span.negative {
+    color: #ef4437;
+}
+
+#chart .product-detail table tr td .value  span.positive {
+    color: #27ae60
+}
+
+
+#chart .product-detail .note {
+    display: block;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: right;
+}
+
+
+/**
+ * Detail section
+ */
+#detail {
+    float: left;
+    width: 300px;
+    height: 100%;
+    border-left: 1px solid #ccc;
+}
+
+#detail {
+    background: rgb(15,88,168);
+    box-sizing: border-box;
+}
+
+#detail .header {
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+#detail .header img {
+    width: 200px;
+}
+
+#detail .header h1 {
+    font-weight: 300;
+    color: #fff;
+    font-size: 20px;
+    margin: 0px;
+}
+
+#detail .content {
+    padding: 15px;
+    box-sizing: border-box;
+    color: #fff;
+    height: 56px;
+    overflow: hidden;
+    transition: all 300ms;
+}
+
+#detail .content.expanded {
+    height: auto;
+}
+
+#detail .content.expanded .list {
+    overflow: auto;
+}
+
+#detail .content .loading {
+    text-align: center;
+    font-size: 60px;
+    padding: 20px 0px;
+}
+
+#detail .content h2 {
+    border-bottom: 1px solid #ccc;
+    padding: 5px 10px;
+    margin: 0px;
+}
+
+#detail .content h2 .fa {
+    cursor: pointer;
+}
+
+#detail .content h2 .openMenu,
+#detail .content h2 .closeMenu {
+    float: right;
+}
+
+#detail .content h2 .closeMenu {
+    display: none;
+}
+
+#detail .content.expanded h2 .closeMenu {
+    display: inline-block;
+}
+
+#detail .content.expanded h2 .openMenu {
+    display: none;
+}
+
+#detail #explore.content.account .item,
+#detail #explore.content.store .item
+{
+    cursor: pointer;
+}
+
+#detail #explore.content.store h2 .back,
+#detail #explore.content.promoter h2 .back {
+    display: inline-block;
+}
+
+#detail .content .list {
+    padding: 10px; 25px;
+}
+
+#detail .content .list .item {
+    margin-bottom: 20px;
+}
+
+#detail .content .list .item .title {
+    font-size: 22px;
+    cursor: pointer;
+}
+
+#detail .content .list .item .progress {
+    margin: 5px 0px;
+    width: 100%;
+    height: 20px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.2);
+    overflow: hidden;
+}
+
+#detail .content .list .item .progress .fill {
+    height: 100%;
+    background: #fff;
+    border-radius: 20px;
+}
+
+#detail .content .list .item .target {
+    text-align: center;
+    font-size: 12px;
+}
+
+#back,
+#empty-stock-back {
+    background: rgb(15,88,168);
+    color: white;
+    border-radius: 7px;
+    border: none;
+    height: 30px;
+}
+
+/**
+ * Popup 
+ */
+.popup-background {
+    position: absolute;
+    z-index:20;
+    background-color: grey;
+    width:100%;
+    height:100%;
+    opacity: 0.5;
+}
+
+.popup-close {
+    margin-right: 5px;
+    margin-top: 3px;
+    border-radius: 5px;
+    color: rgb(15,88,168);
+    background: none;
+    font-size: 25px;
+    border: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.popup-wrapper .container {
+    position: absolute;
+    left: 50%;
+    opacity: 1;
+    z-index: 22;
+    border-radius: 5px;
+    padding: 35px;
+    background: #fff;
+}
+
+.popup-wrapper .container h2 {
+    margin: 0px;
+}
+
+#popup-filter .container, 
+#popup-download .container  {
+    margin-left: -230px;
+    margin-top: 60px;
+    width: 460px;
+    padding: 30px 35px 10px;
+}
+
+#popup-detail .container, 
+#popup-competitor .container{
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+}
+
+#popup-detail .container #table-detail,
+#popup-competitor .container #table-competitor {
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+#popup-detail .container #table-detail td,
+#popup-competitor .container #table-competitor td {
+    padding: 10px;
+}
+
+#popup-account .container{
+    top: 50%;
+    left: 50%;
+    margin-left: -480px;
+    margin-top: -200px;
+    width: 960px;
+    height: 400px;
+}
+
+#popup-account .container #popup-sales-chart{
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+
+/**
+ * SHOW AND HIDE OPTION
+ */
+
+ #branch-select option {
+    display: none;
+}
+
+ #branch-select option.show {
+    display: block;
+ }
+
+#dealer_account-select option {
+    display: none;
+}
+
+#dealer_account-select option.show {
+    display: block;
+}
+
+#dealer-select option {
+    display: none;
+}
+
+#dealer-select option.show {
+    display: block;
+}
+
+.sales-detail .chart-wrapper .left {
+    left: 20px;
+}
+
+
+/**
+ * Tooltip
+ */
+.overall-chart-tooltip {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #000;
+    color: #fff;
+    font-size: 12px;
+    padding: 5px 7px;
+    border-radius: 5px;
+    width: 130px;
+    z-index: 999;
+}
+
+.overall-chart-tooltip .label {
+    font-weight: bold;
+}
+
+.overall-chart-tooltip:before {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    margin-left: -10px;
+    width: 0; 
+    height: 0; 
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-top:10px solid #000; 
+}
+
+#sales-chart .tooltip,
+#popup-sales-chart .tooltip {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#sales-chart .tooltip .tooltip-item,
+#popup-sales-chart .tooltip .tooltip-item {
+    position: absolute;
+    width: 70px;
+    margin-left: -35px;
+    text-align: center;
+    margin-top: -18px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+
+#filter-store option {
+    display: none;
+}
+
+#filter-store option.show {
+    display: block;
+}
+
+.gender {
+    float:left;
+    margin-right: 20px;
+    font-size: 15px;
+}

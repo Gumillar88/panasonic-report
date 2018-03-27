@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <title>Dashboard for /var/www/html/app/Http/Models</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="../../css/bootstrap.min.css" rel="stylesheet">
+  <link href="../../css/nv.d3.min.css" rel="stylesheet">
+  <link href="../../css/style.css" rel="stylesheet">
+  <!--[if lt IE 9]>
+  <script src="../../js/html5shiv.min.js"></script>
+  <script src="../../js/respond.min.js"></script>
+  <![endif]-->
+ </head>
+ <body>
+  <header>
+   <div class="container">
+    <div class="row">
+     <div class="col-md-12">
+      <ol class="breadcrumb">
+        <li><a href="../../index.html">/var/www/html/app</a></li>
+        <li><a href="../index.html">Http</a></li>
+        <li><a href="index.html">Models</a></li>
+        <li class="active">(Dashboard)</li>
+
+      </ol>
+     </div>
+    </div>
+   </div>
+  </header>
+  <div class="container">
+   <div class="row">
+    <div class="col-md-12">
+     <h2>Classes</h2>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Coverage Distribution</h3>
+     <div id="classCoverageDistribution" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Complexity</h3>
+     <div id="classComplexity" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Insufficient Coverage</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Class</th>
+         <th class="text-right">Coverage</th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="AbsenceModel.php.html#11">AbsenceModel</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="BranchModel.php.html#11">BranchModel</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="TokenModel.php.html#11">TokenModel</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReportStockModel.php.html#11">ReportStockModel</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReportSaleModel.php.html#12">ReportSaleModel</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReportModel.php.html#12">ReportModel</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="RegionModel.php.html#11">RegionModel</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="PromotorTargetModel.php.html#11">PromotorTargetModel</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="PromotorModel.php.html#11">PromotorModel</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="PromotorMetaModel.php.html#11">PromotorMetaModel</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ProductPriceModel.php.html#11">ProductPriceModel</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ProductModel.php.html#11">ProductModel</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ProductIncentiveModel.php.html#11">ProductIncentiveModel</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ProductCategoryModel.php.html#11">ProductCategoryModel</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="NewsModel.php.html#11">NewsModel</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DealerTypeModel.php.html#11">DealerTypeModel</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DealerNewsModel.php.html#11">DealerNewsModel</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DealerModel.php.html#11">DealerModel</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DealerChannelModel.php.html#11">DealerChannelModel</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DealerAccountModel.php.html#11">DealerAccountModel</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DashboardTokenModel.php.html#11">DashboardTokenModel</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DashboardDataModel.php.html#11">DashboardDataModel</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DashboardAccountModel.php.html#10">DashboardAccountModel</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CustomerModel.php.html#11">CustomerModel</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CompetitorPriceModel.php.html#11">CompetitorPriceModel</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CompetitorBrandModel.php.html#11">CompetitorBrandModel</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="UserModel.php.html#11">UserModel</a></td><td class="text-right">71%</td></tr>
+       <tr><td><a href="UserMetaModel.php.html#11">UserMetaModel</a></td><td class="text-right">83%</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Project Risks</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Class</th>
+         <th class="text-right"><abbr title="Change Risk Anti-Patterns (CRAP) Index">CRAP</abbr></th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="DashboardDataModel.php.html#11">DashboardDataModel</a></td><td class="text-right">4556</td></tr>
+       <tr><td><a href="ReportModel.php.html#12">ReportModel</a></td><td class="text-right">1980</td></tr>
+       <tr><td><a href="CompetitorPriceModel.php.html#11">CompetitorPriceModel</a></td><td class="text-right">156</td></tr>
+       <tr><td><a href="DealerModel.php.html#11">DealerModel</a></td><td class="text-right">132</td></tr>
+       <tr><td><a href="DealerNewsModel.php.html#11">DealerNewsModel</a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="PromotorMetaModel.php.html#11">PromotorMetaModel</a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="ReportSaleModel.php.html#12">ReportSaleModel</a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="TokenModel.php.html#11">TokenModel</a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="UserMetaModel.php.html#11">UserMetaModel</a></td><td class="text-right">8</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-12">
+     <h2>Methods</h2>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Coverage Distribution</h3>
+     <div id="methodCoverageDistribution" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Complexity</h3>
+     <div id="methodComplexity" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Insufficient Coverage</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Method</th>
+         <th class="text-right">Coverage</th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="AbsenceModel.php.html#22"><abbr title="AbsenceModel::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="PromotorModel.php.html#160"><abbr title="PromotorModel::getAllByType">getAllByType</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="PromotorModel.php.html#26"><abbr title="PromotorModel::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="PromotorModel.php.html#50"><abbr title="PromotorModel::getOne">getOne</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="PromotorModel.php.html#58"><abbr title="PromotorModel::getCalc">getCalc</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="PromotorModel.php.html#73"><abbr title="PromotorModel::getByPhone">getByPhone</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="PromotorModel.php.html#87"><abbr title="PromotorModel::getByDealer">getByDealer</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="PromotorModel.php.html#102"><abbr title="PromotorModel::getByType">getByType</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="PromotorModel.php.html#119"><abbr title="PromotorModel::getByTypeParent">getByTypeParent</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="PromotorModel.php.html#135"><abbr title="PromotorModel::getByParent">getByParent</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="PromotorModel.php.html#148"><abbr title="PromotorModel::getAll">getAll</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="PromotorModel.php.html#177"><abbr title="PromotorModel::update">update</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="PromotorMetaModel.php.html#61"><abbr title="PromotorMetaModel::get">get</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="PromotorModel.php.html#193"><abbr title="PromotorModel::remove">remove</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="PromotorTargetModel.php.html#26"><abbr title="PromotorTargetModel::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="PromotorTargetModel.php.html#51"><abbr title="PromotorTargetModel::getOne">getOne</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="PromotorTargetModel.php.html#66"><abbr title="PromotorTargetModel::getByPromotor">getByPromotor</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="PromotorTargetModel.php.html#81"><abbr title="PromotorTargetModel::getAll">getAll</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="PromotorTargetModel.php.html#94"><abbr title="PromotorTargetModel::getAllByDealer">getAllByDealer</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="PromotorTargetModel.php.html#110"><abbr title="PromotorTargetModel::getAllByMonth">getAllByMonth</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="PromotorTargetModel.php.html#127"><abbr title="PromotorTargetModel::update">update</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="PromotorTargetModel.php.html#147"><abbr title="PromotorTargetModel::updatePromotorMeta">updatePromotorMeta</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="PromotorTargetModel.php.html#168"><abbr title="PromotorTargetModel::removeByPromotor">removeByPromotor</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="PromotorMetaModel.php.html#77"><abbr title="PromotorMetaModel::remove">remove</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="PromotorMetaModel.php.html#22"><abbr title="PromotorMetaModel::set">set</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="RegionModel.php.html#40"><abbr title="RegionModel::getOne">getOne</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ProductModel.php.html#108"><abbr title="ProductModel::getLatestTimestamp">getLatestTimestamp</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ProductIncentiveModel.php.html#69"><abbr title="ProductIncentiveModel::getByChannelModel">getByChannelModel</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ProductIncentiveModel.php.html#85"><abbr title="ProductIncentiveModel::update">update</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ProductIncentiveModel.php.html#101"><abbr title="ProductIncentiveModel::remove">remove</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ProductModel.php.html#22"><abbr title="ProductModel::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ProductModel.php.html#42"><abbr title="ProductModel::getOne">getOne</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ProductModel.php.html#55"><abbr title="ProductModel::getAll">getAll</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ProductModel.php.html#66"><abbr title="ProductModel::getByCategory">getByCategory</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ProductModel.php.html#80"><abbr title="ProductModel::getByProduct">getByProduct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ProductModel.php.html#95"><abbr title="ProductModel::getByProductName">getByProductName</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ProductModel.php.html#121"><abbr title="ProductModel::update">update</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ProductPriceModel.php.html#165"><abbr title="ProductPriceModel::log">log</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ProductModel.php.html#137"><abbr title="ProductModel::remove">remove</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ProductPriceModel.php.html#23"><abbr title="ProductPriceModel::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ProductPriceModel.php.html#45"><abbr title="ProductPriceModel::getOne">getOne</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ProductPriceModel.php.html#59"><abbr title="ProductPriceModel::getDealerType">getDealerType</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ProductPriceModel.php.html#76"><abbr title="ProductPriceModel::getDealerProduct">getDealerProduct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ProductPriceModel.php.html#96"><abbr title="ProductPriceModel::getDealerProductPrice">getDealerProductPrice</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ProductPriceModel.php.html#111"><abbr title="ProductPriceModel::getAll">getAll</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ProductPriceModel.php.html#124"><abbr title="ProductPriceModel::update">update</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ProductPriceModel.php.html#139"><abbr title="ProductPriceModel::getLatestTimestamp">getLatestTimestamp</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ProductPriceModel.php.html#151"><abbr title="ProductPriceModel::remove">remove</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="RegionModel.php.html#21"><abbr title="RegionModel::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="RegionModel.php.html#53"><abbr title="RegionModel::getAll">getAll</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="AbsenceModel.php.html#39"><abbr title="AbsenceModel::get">get</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReportModel.php.html#1034"><abbr title="ReportModel::updatePromotorMeta">updatePromotorMeta</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReportModel.php.html#798"><abbr title="ReportModel::getTargetSalesTl">getTargetSalesTl</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReportModel.php.html#821"><abbr title="ReportModel::getSalesTl">getSalesTl</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReportModel.php.html#853"><abbr title="ReportModel::getTargetSalesAccount">getTargetSalesAccount</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReportModel.php.html#876"><abbr title="ReportModel::getSalesAccount">getSalesAccount</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReportModel.php.html#907"><abbr title="ReportModel::getTargetSalesDealer">getTargetSalesDealer</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReportModel.php.html#930"><abbr title="ReportModel::getSalesDealer">getSalesDealer</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReportModel.php.html#961"><abbr title="ReportModel::getTargetSalesPromotor">getTargetSalesPromotor</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReportModel.php.html#984"><abbr title="ReportModel::getSalesPromotor">getSalesPromotor</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReportModel.php.html#1014"><abbr title="ReportModel::update">update</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReportModel.php.html#1054"><abbr title="ReportModel::remove">remove</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReportModel.php.html#727"><abbr title="ReportModel::getTargetSalesBranchByTL">getTargetSalesBranchByTL</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReportSaleModel.php.html#21"><abbr title="ReportSaleModel::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReportSaleModel.php.html#63"><abbr title="ReportSaleModel::getData">getData</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReportStockModel.php.html#22"><abbr title="ReportStockModel::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReportStockModel.php.html#45"><abbr title="ReportStockModel::getOne">getOne</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReportStockModel.php.html#62"><abbr title="ReportStockModel::getPagination">getPagination</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReportStockModel.php.html#91"><abbr title="ReportStockModel::update">update</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="TokenModel.php.html#20"><abbr title="TokenModel::encode">encode</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="TokenModel.php.html#48"><abbr title="TokenModel::decode">decode</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="UserModel.php.html#55"><abbr title="UserModel::getAll">getAll</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="UserModel.php.html#80"><abbr title="UserModel::getByUsername">getByUsername</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReportModel.php.html#762"><abbr title="ReportModel::getSalesBranchByTL">getSalesBranchByTL</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReportModel.php.html#695"><abbr title="ReportModel::getSalesAccountByTL">getSalesAccountByTL</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="RegionModel.php.html#66"><abbr title="RegionModel::update">update</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReportModel.php.html#283"><abbr title="ReportModel::getByMonthTargetPromotorData">getByMonthTargetPromotorData</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="RegionModel.php.html#84"><abbr title="RegionModel::anonymous function">anonymous function</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReportModel.php.html#22"><abbr title="ReportModel::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReportModel.php.html#68"><abbr title="ReportModel::getOne">getOne</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReportModel.php.html#81"><abbr title="ReportModel::getByDateDealer">getByDateDealer</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReportModel.php.html#112"><abbr title="ReportModel::getByDatePromotor">getByDatePromotor</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReportModel.php.html#138"><abbr title="ReportModel::getByMonthDealer">getByMonthDealer</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReportModel.php.html#172"><abbr title="ReportModel::getByMonthTargetPromotor">getByMonthTargetPromotor</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReportModel.php.html#192"><abbr title="ReportModel::getReportPromotorByMonth">getReportPromotorByMonth</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReportModel.php.html#222"><abbr title="ReportModel::getDisplayReportPromotorByMonth">getDisplayReportPromotorByMonth</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReportModel.php.html#252"><abbr title="ReportModel::getOneReportPromotor">getOneReportPromotor</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReportModel.php.html#308"><abbr title="ReportModel::getByMonthTargetDealer">getByMonthTargetDealer</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReportModel.php.html#664"><abbr title="ReportModel::getTargetSalesAccountByTL">getTargetSalesAccountByTL</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReportModel.php.html#331"><abbr title="ReportModel::getByMonthTargetDealerData">getByMonthTargetDealerData</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReportModel.php.html#355"><abbr title="ReportModel::getByMonthComparisonByPromotor">getByMonthComparisonByPromotor</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReportModel.php.html#379"><abbr title="ReportModel::getTargetSalesArco">getTargetSalesArco</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReportModel.php.html#401"><abbr title="ReportModel::getSalesArco">getSalesArco</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReportModel.php.html#432"><abbr title="ReportModel::getTargetSalesRegion">getTargetSalesRegion</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReportModel.php.html#457"><abbr title="ReportModel::getSalesRegion">getSalesRegion</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReportModel.php.html#488"><abbr title="ReportModel::getTargetSalesBranchByRegionArco">getTargetSalesBranchByRegionArco</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReportModel.php.html#532"><abbr title="ReportModel::getSalesBranchByRegionArco">getSalesBranchByRegionArco</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReportModel.php.html#576"><abbr title="ReportModel::getTargetSalesAccountByBranchTL">getTargetSalesAccountByBranchTL</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReportModel.php.html#619"><abbr title="ReportModel::getSalesAccountByBranchTL">getSalesAccountByBranchTL</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ProductIncentiveModel.php.html#56"><abbr title="ProductIncentiveModel::getAll">getAll</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ProductIncentiveModel.php.html#43"><abbr title="ProductIncentiveModel::getOne">getOne</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ProductIncentiveModel.php.html#22"><abbr title="ProductIncentiveModel::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DashboardDataModel.php.html#276"><abbr title="DashboardDataModel::dataPromoterGender">dataPromoterGender</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DashboardAccountModel.php.html#82"><abbr title="DashboardAccountModel::update">update</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DashboardAccountModel.php.html#100"><abbr title="DashboardAccountModel::anonymous function">anonymous function</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DashboardDataModel.php.html#19"><abbr title="DashboardDataModel::getFirstReportDate">getFirstReportDate</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DashboardDataModel.php.html#30"><abbr title="DashboardDataModel::getAccount">getAccount</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DashboardDataModel.php.html#50"><abbr title="DashboardDataModel::getDealer">getDealer</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DashboardDataModel.php.html#72"><abbr title="DashboardDataModel::dataExploreSales">dataExploreSales</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DashboardDataModel.php.html#152"><abbr title="DashboardDataModel::dataExploreSalesPromotor">dataExploreSalesPromotor</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DashboardDataModel.php.html#225"><abbr title="DashboardDataModel::dataExploreTarget">dataExploreTarget</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DashboardDataModel.php.html#251"><abbr title="DashboardDataModel::dataExploreTargetPromotor">dataExploreTargetPromotor</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DashboardDataModel.php.html#299"><abbr title="DashboardDataModel::chartSalesTarget">chartSalesTarget</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DashboardAccountModel.php.html#54"><abbr title="DashboardAccountModel::getByEmail">getByEmail</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DashboardDataModel.php.html#348"><abbr title="DashboardDataModel::chartSalesTrend">chartSalesTrend</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DashboardDataModel.php.html#414"><abbr title="DashboardDataModel::chartSalesProduct">chartSalesProduct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DashboardDataModel.php.html#485"><abbr title="DashboardDataModel::chartSalesAccount">chartSalesAccount</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DashboardDataModel.php.html#539"><abbr title="DashboardDataModel::chartSalesDealer">chartSalesDealer</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DashboardDataModel.php.html#568"><abbr title="DashboardDataModel::chartSalesPromoter">chartSalesPromoter</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DashboardDataModel.php.html#596"><abbr title="DashboardDataModel::chartSalesChannel">chartSalesChannel</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DashboardDataModel.php.html#634"><abbr title="DashboardDataModel::stockGet">stockGet</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DashboardDataModel.php.html#662"><abbr title="DashboardDataModel::productGet">productGet</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DashboardDataModel.php.html#738"><abbr title="DashboardDataModel::report">report</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DashboardDataModel.php.html#835"><abbr title="DashboardDataModel::reportPivot">reportPivot</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DashboardAccountModel.php.html#67"><abbr title="DashboardAccountModel::getAll">getAll</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DashboardAccountModel.php.html#40"><abbr title="DashboardAccountModel::getOne">getOne</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DashboardTokenModel.php.html#21"><abbr title="DashboardTokenModel::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CompetitorBrandModel.php.html#51"><abbr title="CompetitorBrandModel::getAll">getAll</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="BranchModel.php.html#21"><abbr title="BranchModel::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="BranchModel.php.html#41"><abbr title="BranchModel::getOne">getOne</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="BranchModel.php.html#55"><abbr title="BranchModel::getAllByRegion">getAllByRegion</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="BranchModel.php.html#69"><abbr title="BranchModel::getByPromotor">getByPromotor</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="BranchModel.php.html#82"><abbr title="BranchModel::getAll">getAll</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="BranchModel.php.html#95"><abbr title="BranchModel::update">update</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="BranchModel.php.html#113"><abbr title="BranchModel::anonymous function">anonymous function</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CompetitorBrandModel.php.html#20"><abbr title="CompetitorBrandModel::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CompetitorBrandModel.php.html#38"><abbr title="CompetitorBrandModel::getOne">getOne</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CompetitorBrandModel.php.html#62"><abbr title="CompetitorBrandModel::getLatestTimestamp">getLatestTimestamp</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DashboardAccountModel.php.html#20"><abbr title="DashboardAccountModel::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CompetitorBrandModel.php.html#75"><abbr title="CompetitorBrandModel::update">update</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CompetitorBrandModel.php.html#94"><abbr title="CompetitorBrandModel::anonymous function">anonymous function</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CompetitorPriceModel.php.html#20"><abbr title="CompetitorPriceModel::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CompetitorPriceModel.php.html#65"><abbr title="CompetitorPriceModel::getOne">getOne</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CompetitorPriceModel.php.html#82"><abbr title="CompetitorPriceModel::getCompiledIndex">getCompiledIndex</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CompetitorPriceModel.php.html#158"><abbr title="CompetitorPriceModel::getListByPromotor">getListByPromotor</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CompetitorPriceModel.php.html#191"><abbr title="CompetitorPriceModel::update">update</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CompetitorPriceModel.php.html#207"><abbr title="CompetitorPriceModel::remove">remove</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CustomerModel.php.html#22"><abbr title="CustomerModel::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CustomerModel.php.html#47"><abbr title="CustomerModel::getByPhone">getByPhone</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DashboardDataModel.php.html#962"><abbr title="DashboardDataModel::reportPromotorTarget">reportPromotorTarget</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DashboardTokenModel.php.html#37"><abbr title="DashboardTokenModel::getOne">getOne</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ProductCategoryModel.php.html#101"><abbr title="ProductCategoryModel::remove">remove</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="NewsModel.php.html#42"><abbr title="NewsModel::getOne">getOne</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DealerNewsModel.php.html#50"><abbr title="DealerNewsModel::getAll">getAll</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DealerNewsModel.php.html#67"><abbr title="DealerNewsModel::getPagination">getPagination</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DealerTypeModel.php.html#20"><abbr title="DealerTypeModel::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DealerTypeModel.php.html#38"><abbr title="DealerTypeModel::getDealertType">getDealertType</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DealerTypeModel.php.html#50"><abbr title="DealerTypeModel::getOne">getOne</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DealerTypeModel.php.html#63"><abbr title="DealerTypeModel::getAll">getAll</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DealerTypeModel.php.html#76"><abbr title="DealerTypeModel::update">update</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DealerTypeModel.php.html#92"><abbr title="DealerTypeModel::remove">remove</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="NewsModel.php.html#22"><abbr title="NewsModel::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="NewsModel.php.html#53"><abbr title="NewsModel::getAll">getAll</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DealerModel.php.html#160"><abbr title="DealerModel::anonymous function">anonymous function</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="NewsModel.php.html#65"><abbr title="NewsModel::getPagination">getPagination</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="NewsModel.php.html#83"><abbr title="NewsModel::getMany">getMany</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="NewsModel.php.html#100"><abbr title="NewsModel::update">update</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="NewsModel.php.html#118"><abbr title="NewsModel::anonymous function">anonymous function</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ProductCategoryModel.php.html#20"><abbr title="ProductCategoryModel::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ProductCategoryModel.php.html#38"><abbr title="ProductCategoryModel::getOne">getOne</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ProductCategoryModel.php.html#50"><abbr title="ProductCategoryModel::getCategory">getCategory</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ProductCategoryModel.php.html#61"><abbr title="ProductCategoryModel::getAll">getAll</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ProductCategoryModel.php.html#72"><abbr title="ProductCategoryModel::getLatestTimestamp">getLatestTimestamp</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ProductCategoryModel.php.html#85"><abbr title="ProductCategoryModel::update">update</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DealerNewsModel.php.html#21"><abbr title="DealerNewsModel::set">set</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DealerModel.php.html#142"><abbr title="DealerModel::update">update</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DashboardTokenModel.php.html#51"><abbr title="DashboardTokenModel::getByToken">getByToken</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DealerModel.php.html#129"><abbr title="DealerModel::getAll">getAll</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DashboardTokenModel.php.html#65"><abbr title="DashboardTokenModel::getByDashboardAccount">getByDashboardAccount</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DashboardTokenModel.php.html#80"><abbr title="DashboardTokenModel::remove">remove</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DashboardTokenModel.php.html#94"><abbr title="DashboardTokenModel::removeByToken">removeByToken</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DashboardTokenModel.php.html#108"><abbr title="DashboardTokenModel::removeByDashboardAccount">removeByDashboardAccount</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DealerAccountModel.php.html#22"><abbr title="DealerAccountModel::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DealerAccountModel.php.html#43"><abbr title="DealerAccountModel::getOne">getOne</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DealerAccountModel.php.html#58"><abbr title="DealerAccountModel::getByPromotor">getByPromotor</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DealerAccountModel.php.html#74"><abbr title="DealerAccountModel::getByParent">getByParent</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DealerAccountModel.php.html#91"><abbr title="DealerAccountModel::getByBranch">getByBranch</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DealerAccountModel.php.html#105"><abbr title="DealerAccountModel::getAll">getAll</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DealerAccountModel.php.html#118"><abbr title="DealerAccountModel::update">update</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DealerAccountModel.php.html#134"><abbr title="DealerAccountModel::remove">remove</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DealerChannelModel.php.html#20"><abbr title="DealerChannelModel::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DealerChannelModel.php.html#39"><abbr title="DealerChannelModel::getOne">getOne</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DealerChannelModel.php.html#52"><abbr title="DealerChannelModel::getAll">getAll</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DealerChannelModel.php.html#65"><abbr title="DealerChannelModel::update">update</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DealerChannelModel.php.html#81"><abbr title="DealerChannelModel::remove">remove</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DealerModel.php.html#20"><abbr title="DealerModel::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DealerModel.php.html#63"><abbr title="DealerModel::getOne">getOne</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DealerModel.php.html#77"><abbr title="DealerModel::getByAccount">getByAccount</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DealerModel.php.html#95"><abbr title="DealerModel::getByBranch">getByBranch</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DealerModel.php.html#113"><abbr title="DealerModel::getByTeamLeader">getByTeamLeader</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="UserModel.php.html#109"><abbr title="UserModel::remove">remove</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="UserMetaModel.php.html#24"><abbr title="UserMetaModel::set">set</abbr></a></td><td class="text-right">60%</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Project Risks</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Method</th>
+         <th class="text-right"><abbr title="Change Risk Anti-Patterns (CRAP) Index">CRAP</abbr></th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="DashboardDataModel.php.html#72"><abbr title="DashboardDataModel::dataExploreSales">dataExploreSales</abbr></a></td><td class="text-right">42</td></tr>
+       <tr><td><a href="DashboardDataModel.php.html#152"><abbr title="DashboardDataModel::dataExploreSalesPromotor">dataExploreSalesPromotor</abbr></a></td><td class="text-right">42</td></tr>
+       <tr><td><a href="DashboardDataModel.php.html#299"><abbr title="DashboardDataModel::chartSalesTarget">chartSalesTarget</abbr></a></td><td class="text-right">42</td></tr>
+       <tr><td><a href="DashboardDataModel.php.html#348"><abbr title="DashboardDataModel::chartSalesTrend">chartSalesTrend</abbr></a></td><td class="text-right">42</td></tr>
+       <tr><td><a href="DashboardDataModel.php.html#414"><abbr title="DashboardDataModel::chartSalesProduct">chartSalesProduct</abbr></a></td><td class="text-right">42</td></tr>
+       <tr><td><a href="DashboardDataModel.php.html#662"><abbr title="DashboardDataModel::productGet">productGet</abbr></a></td><td class="text-right">42</td></tr>
+       <tr><td><a href="CompetitorPriceModel.php.html#82"><abbr title="CompetitorPriceModel::getCompiledIndex">getCompiledIndex</abbr></a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="DashboardDataModel.php.html#738"><abbr title="DashboardDataModel::report">report</abbr></a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="DashboardDataModel.php.html#835"><abbr title="DashboardDataModel::reportPivot">reportPivot</abbr></a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="DashboardDataModel.php.html#962"><abbr title="DashboardDataModel::reportPromotorTarget">reportPromotorTarget</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="DashboardDataModel.php.html#485"><abbr title="DashboardDataModel::chartSalesAccount">chartSalesAccount</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="TokenModel.php.html#48"><abbr title="TokenModel::decode">decode</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="ReportSaleModel.php.html#21"><abbr title="ReportSaleModel::create">create</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="ReportModel.php.html#22"><abbr title="ReportModel::create">create</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="CompetitorPriceModel.php.html#20"><abbr title="CompetitorPriceModel::create">create</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="DealerModel.php.html#20"><abbr title="DealerModel::create">create</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="DealerNewsModel.php.html#21"><abbr title="DealerNewsModel::set">set</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="PromotorMetaModel.php.html#22"><abbr title="PromotorMetaModel::set">set</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="DashboardDataModel.php.html#596"><abbr title="DashboardDataModel::chartSalesChannel">chartSalesChannel</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="ReportModel.php.html#488"><abbr title="ReportModel::getTargetSalesBranchByRegionArco">getTargetSalesBranchByRegionArco</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="ReportModel.php.html#532"><abbr title="ReportModel::getSalesBranchByRegionArco">getSalesBranchByRegionArco</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="ReportModel.php.html#576"><abbr title="ReportModel::getTargetSalesAccountByBranchTL">getTargetSalesAccountByBranchTL</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="ReportModel.php.html#619"><abbr title="ReportModel::getSalesAccountByBranchTL">getSalesAccountByBranchTL</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="ReportModel.php.html#727"><abbr title="ReportModel::getTargetSalesBranchByTL">getTargetSalesBranchByTL</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="ReportModel.php.html#762"><abbr title="ReportModel::getSalesBranchByTL">getSalesBranchByTL</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="DashboardDataModel.php.html#251"><abbr title="DashboardDataModel::dataExploreTargetPromotor">dataExploreTargetPromotor</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="DashboardDataModel.php.html#225"><abbr title="DashboardDataModel::dataExploreTarget">dataExploreTarget</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="UserMetaModel.php.html#24"><abbr title="UserMetaModel::set">set</abbr></a></td><td class="text-right">2</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+   </div>
+   <footer>
+    <hr/>
+    <p>
+     <small>Generated by <a href="http://github.com/sebastianbergmann/php-code-coverage" target="_top">PHP_CodeCoverage 2.2.4</a> using <a href="https://secure.php.net/" target="_top">PHP 7.0.23-1+ubuntu14.04.1+deb.sury.org+1</a> and <a href="https://phpunit.de/">PHPUnit 4.8.36</a> at Fri Sep 8 14:11:18 WIB 2017.</small>
+    </p>
+   </footer>
+  </div>
+  <script src="../../js/jquery.min.js" type="text/javascript"></script>
+  <script src="../../js/bootstrap.min.js" type="text/javascript"></script>
+  <script src="../../js/holder.min.js" type="text/javascript"></script>
+  <script src="../../js/d3.min.js" type="text/javascript"></script>
+  <script src="../../js/nv.d3.min.js" type="text/javascript"></script>
+  <script type="text/javascript">
+$(document).ready(function() {
+  nv.addGraph(function() {
+    var chart = nv.models.multiBarChart();
+    chart.tooltips(false)
+      .showControls(false)
+      .showLegend(false)
+      .reduceXTicks(false)
+      .staggerLabels(true)
+      .yAxis.tickFormat(d3.format('d'));
+
+    d3.select('#classCoverageDistribution svg')
+      .datum(getCoverageDistributionData([26,0,0,0,0,0,0,0,1,1,0,1], "Class Coverage"))
+      .transition().duration(500).call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  nv.addGraph(function() {
+    var chart = nv.models.multiBarChart();
+    chart.tooltips(false)
+      .showControls(false)
+      .showLegend(false)
+      .reduceXTicks(false)
+      .staggerLabels(true)
+      .yAxis.tickFormat(d3.format('d'));
+
+    d3.select('#methodCoverageDistribution svg')
+      .datum(getCoverageDistributionData([201,0,0,0,0,0,0,1,0,0,0,17], "Method Coverage"))
+      .transition().duration(500).call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  function getCoverageDistributionData(data, label) {
+    var labels = [
+      '0%',
+      '0-10%',
+      '10-20%',
+      '20-30%',
+      '30-40%',
+      '40-50%',
+      '50-60%',
+      '60-70%',
+      '70-80%',
+      '80-90%',
+      '90-100%',
+      '100%'
+    ];
+    var values = [];
+    $.each(labels, function(key) {
+      values.push({x: labels[key], y: data[key]});
+    });
+
+    return [
+      {
+        key: label,
+        values: values,
+        color: "#4572A7"
+      }
+    ];
+  }
+  nv.addGraph(function() {
+    var chart = nv.models.scatterChart()
+      .showDistX(true)
+      .showDistY(true)
+      .showLegend(false)
+      .forceX([0, 100]);
+    chart.tooltipContent(function(key, y, e, graph) {
+      return '<p>' + graph.point.class + '</p>';
+    });
+
+    chart.xAxis.axisLabel('Code Coverage (in percent)');
+    chart.yAxis.axisLabel('Cyclomatic Complexity');
+
+    d3.select('#classComplexity svg')
+      .datum(getComplexityData([[0,2,"<a href=\"AbsenceModel.php.html#11\">AbsenceModel<\/a>"],[0,8,"<a href=\"BranchModel.php.html#11\">BranchModel<\/a>"],[0,7,"<a href=\"CompetitorBrandModel.php.html#11\">CompetitorBrandModel<\/a>"],[0,12,"<a href=\"CompetitorPriceModel.php.html#11\">CompetitorPriceModel<\/a>"],[0,2,"<a href=\"CustomerModel.php.html#11\">CustomerModel<\/a>"],[0,7,"<a href=\"DashboardAccountModel.php.html#10\">DashboardAccountModel<\/a>"],[0,67,"<a href=\"DashboardDataModel.php.html#11\">DashboardDataModel<\/a>"],[0,7,"<a href=\"DashboardTokenModel.php.html#11\">DashboardTokenModel<\/a>"],[0,8,"<a href=\"DealerAccountModel.php.html#11\">DealerAccountModel<\/a>"],[0,5,"<a href=\"DealerChannelModel.php.html#11\">DealerChannelModel<\/a>"],[0,11,"<a href=\"DealerModel.php.html#11\">DealerModel<\/a>"],[0,4,"<a href=\"DealerNewsModel.php.html#11\">DealerNewsModel<\/a>"],[0,6,"<a href=\"DealerTypeModel.php.html#11\">DealerTypeModel<\/a>"],[100,1,"<a href=\"LogModel.php.html#11\">LogModel<\/a>"],[0,8,"<a href=\"NewsModel.php.html#11\">NewsModel<\/a>"],[0,7,"<a href=\"ProductCategoryModel.php.html#11\">ProductCategoryModel<\/a>"],[0,6,"<a href=\"ProductIncentiveModel.php.html#11\">ProductIncentiveModel<\/a>"],[0,9,"<a href=\"ProductModel.php.html#11\">ProductModel<\/a>"],[0,10,"<a href=\"ProductPriceModel.php.html#11\">ProductPriceModel<\/a>"],[0,4,"<a href=\"PromotorMetaModel.php.html#11\">PromotorMetaModel<\/a>"],[0,12,"<a href=\"PromotorModel.php.html#11\">PromotorModel<\/a>"],[0,9,"<a href=\"PromotorTargetModel.php.html#11\">PromotorTargetModel<\/a>"],[0,6,"<a href=\"RegionModel.php.html#11\">RegionModel<\/a>"],[0,44,"<a href=\"ReportModel.php.html#12\">ReportModel<\/a>"],[0,4,"<a href=\"ReportSaleModel.php.html#12\">ReportSaleModel<\/a>"],[0,4,"<a href=\"ReportStockModel.php.html#11\">ReportStockModel<\/a>"],[0,4,"<a href=\"TokenModel.php.html#11\">TokenModel<\/a>"],[83.783783783784,8,"<a href=\"UserMetaModel.php.html#11\">UserMetaModel<\/a>"],[71.428571428571,7,"<a href=\"UserModel.php.html#11\">UserModel<\/a>"]], 'Class Complexity'))
+      .transition()
+      .duration(500)
+      .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  nv.addGraph(function() {
+    var chart = nv.models.scatterChart()
+      .showDistX(true)
+      .showDistY(true)
+      .showLegend(false)
+      .forceX([0, 100]);
+    chart.tooltipContent(function(key, y, e, graph) {
+      return '<p>' + graph.point.class + '</p>';
+    });
+
+    chart.xAxis.axisLabel('Code Coverage (in percent)');
+    chart.yAxis.axisLabel('Method Complexity');
+
+    d3.select('#methodComplexity svg')
+      .datum(getComplexityData([[0,1,"<a href=\"AbsenceModel.php.html#22\">AbsenceModel::create<\/a>"],[0,1,"<a href=\"AbsenceModel.php.html#39\">AbsenceModel::get<\/a>"],[0,1,"<a href=\"BranchModel.php.html#21\">BranchModel::create<\/a>"],[0,1,"<a href=\"BranchModel.php.html#41\">BranchModel::getOne<\/a>"],[0,1,"<a href=\"BranchModel.php.html#55\">BranchModel::getAllByRegion<\/a>"],[0,1,"<a href=\"BranchModel.php.html#69\">BranchModel::getByPromotor<\/a>"],[0,1,"<a href=\"BranchModel.php.html#82\">BranchModel::getAll<\/a>"],[0,1,"<a href=\"BranchModel.php.html#95\">BranchModel::update<\/a>"],[100,1,"<a href=\"BranchModel.php.html#111\">BranchModel::remove<\/a>"],[0,1,"<a href=\"BranchModel.php.html#113\">BranchModel::anonymous function<\/a>"],[0,1,"<a href=\"CompetitorBrandModel.php.html#20\">CompetitorBrandModel::create<\/a>"],[0,1,"<a href=\"CompetitorBrandModel.php.html#38\">CompetitorBrandModel::getOne<\/a>"],[0,1,"<a href=\"CompetitorBrandModel.php.html#51\">CompetitorBrandModel::getAll<\/a>"],[0,1,"<a href=\"CompetitorBrandModel.php.html#62\">CompetitorBrandModel::getLatestTimestamp<\/a>"],[0,1,"<a href=\"CompetitorBrandModel.php.html#75\">CompetitorBrandModel::update<\/a>"],[100,1,"<a href=\"CompetitorBrandModel.php.html#92\">CompetitorBrandModel::remove<\/a>"],[0,1,"<a href=\"CompetitorBrandModel.php.html#94\">CompetitorBrandModel::anonymous function<\/a>"],[0,3,"<a href=\"CompetitorPriceModel.php.html#20\">CompetitorPriceModel::create<\/a>"],[0,1,"<a href=\"CompetitorPriceModel.php.html#65\">CompetitorPriceModel::getOne<\/a>"],[0,5,"<a href=\"CompetitorPriceModel.php.html#82\">CompetitorPriceModel::getCompiledIndex<\/a>"],[0,1,"<a href=\"CompetitorPriceModel.php.html#158\">CompetitorPriceModel::getListByPromotor<\/a>"],[0,1,"<a href=\"CompetitorPriceModel.php.html#191\">CompetitorPriceModel::update<\/a>"],[0,1,"<a href=\"CompetitorPriceModel.php.html#207\">CompetitorPriceModel::remove<\/a>"],[0,1,"<a href=\"CustomerModel.php.html#22\">CustomerModel::create<\/a>"],[0,1,"<a href=\"CustomerModel.php.html#47\">CustomerModel::getByPhone<\/a>"],[0,1,"<a href=\"DashboardAccountModel.php.html#20\">DashboardAccountModel::create<\/a>"],[0,1,"<a href=\"DashboardAccountModel.php.html#40\">DashboardAccountModel::getOne<\/a>"],[0,1,"<a href=\"DashboardAccountModel.php.html#54\">DashboardAccountModel::getByEmail<\/a>"],[0,1,"<a href=\"DashboardAccountModel.php.html#67\">DashboardAccountModel::getAll<\/a>"],[0,1,"<a href=\"DashboardAccountModel.php.html#82\">DashboardAccountModel::update<\/a>"],[100,1,"<a href=\"DashboardAccountModel.php.html#98\">DashboardAccountModel::remove<\/a>"],[0,1,"<a href=\"DashboardAccountModel.php.html#100\">DashboardAccountModel::anonymous function<\/a>"],[0,1,"<a href=\"DashboardDataModel.php.html#19\">DashboardDataModel::getFirstReportDate<\/a>"],[0,1,"<a href=\"DashboardDataModel.php.html#30\">DashboardDataModel::getAccount<\/a>"],[0,1,"<a href=\"DashboardDataModel.php.html#50\">DashboardDataModel::getDealer<\/a>"],[0,6,"<a href=\"DashboardDataModel.php.html#72\">DashboardDataModel::dataExploreSales<\/a>"],[0,6,"<a href=\"DashboardDataModel.php.html#152\">DashboardDataModel::dataExploreSalesPromotor<\/a>"],[0,2,"<a href=\"DashboardDataModel.php.html#225\">DashboardDataModel::dataExploreTarget<\/a>"],[0,2,"<a href=\"DashboardDataModel.php.html#251\">DashboardDataModel::dataExploreTargetPromotor<\/a>"],[0,1,"<a href=\"DashboardDataModel.php.html#276\">DashboardDataModel::dataPromoterGender<\/a>"],[0,6,"<a href=\"DashboardDataModel.php.html#299\">DashboardDataModel::chartSalesTarget<\/a>"],[0,6,"<a href=\"DashboardDataModel.php.html#348\">DashboardDataModel::chartSalesTrend<\/a>"],[0,6,"<a href=\"DashboardDataModel.php.html#414\">DashboardDataModel::chartSalesProduct<\/a>"],[0,4,"<a href=\"DashboardDataModel.php.html#485\">DashboardDataModel::chartSalesAccount<\/a>"],[0,1,"<a href=\"DashboardDataModel.php.html#539\">DashboardDataModel::chartSalesDealer<\/a>"],[0,1,"<a href=\"DashboardDataModel.php.html#568\">DashboardDataModel::chartSalesPromoter<\/a>"],[0,2,"<a href=\"DashboardDataModel.php.html#596\">DashboardDataModel::chartSalesChannel<\/a>"],[0,1,"<a href=\"DashboardDataModel.php.html#634\">DashboardDataModel::stockGet<\/a>"],[0,6,"<a href=\"DashboardDataModel.php.html#662\">DashboardDataModel::productGet<\/a>"],[0,5,"<a href=\"DashboardDataModel.php.html#738\">DashboardDataModel::report<\/a>"],[0,5,"<a href=\"DashboardDataModel.php.html#835\">DashboardDataModel::reportPivot<\/a>"],[0,4,"<a href=\"DashboardDataModel.php.html#962\">DashboardDataModel::reportPromotorTarget<\/a>"],[0,1,"<a href=\"DashboardTokenModel.php.html#21\">DashboardTokenModel::create<\/a>"],[0,1,"<a href=\"DashboardTokenModel.php.html#37\">DashboardTokenModel::getOne<\/a>"],[0,1,"<a href=\"DashboardTokenModel.php.html#51\">DashboardTokenModel::getByToken<\/a>"],[0,1,"<a href=\"DashboardTokenModel.php.html#65\">DashboardTokenModel::getByDashboardAccount<\/a>"],[0,1,"<a href=\"DashboardTokenModel.php.html#80\">DashboardTokenModel::remove<\/a>"],[0,1,"<a href=\"DashboardTokenModel.php.html#94\">DashboardTokenModel::removeByToken<\/a>"],[0,1,"<a href=\"DashboardTokenModel.php.html#108\">DashboardTokenModel::removeByDashboardAccount<\/a>"],[0,1,"<a href=\"DealerAccountModel.php.html#22\">DealerAccountModel::create<\/a>"],[0,1,"<a href=\"DealerAccountModel.php.html#43\">DealerAccountModel::getOne<\/a>"],[0,1,"<a href=\"DealerAccountModel.php.html#58\">DealerAccountModel::getByPromotor<\/a>"],[0,1,"<a href=\"DealerAccountModel.php.html#74\">DealerAccountModel::getByParent<\/a>"],[0,1,"<a href=\"DealerAccountModel.php.html#91\">DealerAccountModel::getByBranch<\/a>"],[0,1,"<a href=\"DealerAccountModel.php.html#105\">DealerAccountModel::getAll<\/a>"],[0,1,"<a href=\"DealerAccountModel.php.html#118\">DealerAccountModel::update<\/a>"],[0,1,"<a href=\"DealerAccountModel.php.html#134\">DealerAccountModel::remove<\/a>"],[0,1,"<a href=\"DealerChannelModel.php.html#20\">DealerChannelModel::create<\/a>"],[0,1,"<a href=\"DealerChannelModel.php.html#39\">DealerChannelModel::getOne<\/a>"],[0,1,"<a href=\"DealerChannelModel.php.html#52\">DealerChannelModel::getAll<\/a>"],[0,1,"<a href=\"DealerChannelModel.php.html#65\">DealerChannelModel::update<\/a>"],[0,1,"<a href=\"DealerChannelModel.php.html#81\">DealerChannelModel::remove<\/a>"],[0,3,"<a href=\"DealerModel.php.html#20\">DealerModel::create<\/a>"],[0,1,"<a href=\"DealerModel.php.html#63\">DealerModel::getOne<\/a>"],[0,1,"<a href=\"DealerModel.php.html#77\">DealerModel::getByAccount<\/a>"],[0,1,"<a href=\"DealerModel.php.html#95\">DealerModel::getByBranch<\/a>"],[0,1,"<a href=\"DealerModel.php.html#113\">DealerModel::getByTeamLeader<\/a>"],[0,1,"<a href=\"DealerModel.php.html#129\">DealerModel::getAll<\/a>"],[0,1,"<a href=\"DealerModel.php.html#142\">DealerModel::update<\/a>"],[100,1,"<a href=\"DealerModel.php.html#158\">DealerModel::remove<\/a>"],[0,1,"<a href=\"DealerModel.php.html#160\">DealerModel::anonymous function<\/a>"],[0,2,"<a href=\"DealerNewsModel.php.html#21\">DealerNewsModel::set<\/a>"],[0,1,"<a href=\"DealerNewsModel.php.html#50\">DealerNewsModel::getAll<\/a>"],[0,1,"<a href=\"DealerNewsModel.php.html#67\">DealerNewsModel::getPagination<\/a>"],[0,1,"<a href=\"DealerTypeModel.php.html#20\">DealerTypeModel::create<\/a>"],[0,1,"<a href=\"DealerTypeModel.php.html#38\">DealerTypeModel::getDealertType<\/a>"],[0,1,"<a href=\"DealerTypeModel.php.html#50\">DealerTypeModel::getOne<\/a>"],[0,1,"<a href=\"DealerTypeModel.php.html#63\">DealerTypeModel::getAll<\/a>"],[0,1,"<a href=\"DealerTypeModel.php.html#76\">DealerTypeModel::update<\/a>"],[0,1,"<a href=\"DealerTypeModel.php.html#92\">DealerTypeModel::remove<\/a>"],[100,1,"<a href=\"LogModel.php.html#21\">LogModel::record<\/a>"],[0,1,"<a href=\"NewsModel.php.html#22\">NewsModel::create<\/a>"],[0,1,"<a href=\"NewsModel.php.html#42\">NewsModel::getOne<\/a>"],[0,1,"<a href=\"NewsModel.php.html#53\">NewsModel::getAll<\/a>"],[0,1,"<a href=\"NewsModel.php.html#65\">NewsModel::getPagination<\/a>"],[0,1,"<a href=\"NewsModel.php.html#83\">NewsModel::getMany<\/a>"],[0,1,"<a href=\"NewsModel.php.html#100\">NewsModel::update<\/a>"],[100,1,"<a href=\"NewsModel.php.html#116\">NewsModel::remove<\/a>"],[0,1,"<a href=\"NewsModel.php.html#118\">NewsModel::anonymous function<\/a>"],[0,1,"<a href=\"ProductCategoryModel.php.html#20\">ProductCategoryModel::create<\/a>"],[0,1,"<a href=\"ProductCategoryModel.php.html#38\">ProductCategoryModel::getOne<\/a>"],[0,1,"<a href=\"ProductCategoryModel.php.html#50\">ProductCategoryModel::getCategory<\/a>"],[0,1,"<a href=\"ProductCategoryModel.php.html#61\">ProductCategoryModel::getAll<\/a>"],[0,1,"<a href=\"ProductCategoryModel.php.html#72\">ProductCategoryModel::getLatestTimestamp<\/a>"],[0,1,"<a href=\"ProductCategoryModel.php.html#85\">ProductCategoryModel::update<\/a>"],[0,1,"<a href=\"ProductCategoryModel.php.html#101\">ProductCategoryModel::remove<\/a>"],[0,1,"<a href=\"ProductIncentiveModel.php.html#22\">ProductIncentiveModel::create<\/a>"],[0,1,"<a href=\"ProductIncentiveModel.php.html#43\">ProductIncentiveModel::getOne<\/a>"],[0,1,"<a href=\"ProductIncentiveModel.php.html#56\">ProductIncentiveModel::getAll<\/a>"],[0,1,"<a href=\"ProductIncentiveModel.php.html#69\">ProductIncentiveModel::getByChannelModel<\/a>"],[0,1,"<a href=\"ProductIncentiveModel.php.html#85\">ProductIncentiveModel::update<\/a>"],[0,1,"<a href=\"ProductIncentiveModel.php.html#101\">ProductIncentiveModel::remove<\/a>"],[0,1,"<a href=\"ProductModel.php.html#22\">ProductModel::create<\/a>"],[0,1,"<a href=\"ProductModel.php.html#42\">ProductModel::getOne<\/a>"],[0,1,"<a href=\"ProductModel.php.html#55\">ProductModel::getAll<\/a>"],[0,1,"<a href=\"ProductModel.php.html#66\">ProductModel::getByCategory<\/a>"],[0,1,"<a href=\"ProductModel.php.html#80\">ProductModel::getByProduct<\/a>"],[0,1,"<a href=\"ProductModel.php.html#95\">ProductModel::getByProductName<\/a>"],[0,1,"<a href=\"ProductModel.php.html#108\">ProductModel::getLatestTimestamp<\/a>"],[0,1,"<a href=\"ProductModel.php.html#121\">ProductModel::update<\/a>"],[0,1,"<a href=\"ProductModel.php.html#137\">ProductModel::remove<\/a>"],[0,1,"<a href=\"ProductPriceModel.php.html#23\">ProductPriceModel::create<\/a>"],[0,1,"<a href=\"ProductPriceModel.php.html#45\">ProductPriceModel::getOne<\/a>"],[0,1,"<a href=\"ProductPriceModel.php.html#59\">ProductPriceModel::getDealerType<\/a>"],[0,1,"<a href=\"ProductPriceModel.php.html#76\">ProductPriceModel::getDealerProduct<\/a>"],[0,1,"<a href=\"ProductPriceModel.php.html#96\">ProductPriceModel::getDealerProductPrice<\/a>"],[0,1,"<a href=\"ProductPriceModel.php.html#111\">ProductPriceModel::getAll<\/a>"],[0,1,"<a href=\"ProductPriceModel.php.html#124\">ProductPriceModel::update<\/a>"],[0,1,"<a href=\"ProductPriceModel.php.html#139\">ProductPriceModel::getLatestTimestamp<\/a>"],[0,1,"<a href=\"ProductPriceModel.php.html#151\">ProductPriceModel::remove<\/a>"],[0,1,"<a href=\"ProductPriceModel.php.html#165\">ProductPriceModel::log<\/a>"],[0,2,"<a href=\"PromotorMetaModel.php.html#22\">PromotorMetaModel::set<\/a>"],[0,1,"<a href=\"PromotorMetaModel.php.html#61\">PromotorMetaModel::get<\/a>"],[0,1,"<a href=\"PromotorMetaModel.php.html#77\">PromotorMetaModel::remove<\/a>"],[0,1,"<a href=\"PromotorModel.php.html#26\">PromotorModel::create<\/a>"],[0,1,"<a href=\"PromotorModel.php.html#50\">PromotorModel::getOne<\/a>"],[0,1,"<a href=\"PromotorModel.php.html#58\">PromotorModel::getCalc<\/a>"],[0,1,"<a href=\"PromotorModel.php.html#73\">PromotorModel::getByPhone<\/a>"],[0,1,"<a href=\"PromotorModel.php.html#87\">PromotorModel::getByDealer<\/a>"],[0,1,"<a href=\"PromotorModel.php.html#102\">PromotorModel::getByType<\/a>"],[0,1,"<a href=\"PromotorModel.php.html#119\">PromotorModel::getByTypeParent<\/a>"],[0,1,"<a href=\"PromotorModel.php.html#135\">PromotorModel::getByParent<\/a>"],[0,1,"<a href=\"PromotorModel.php.html#148\">PromotorModel::getAll<\/a>"],[0,1,"<a href=\"PromotorModel.php.html#160\">PromotorModel::getAllByType<\/a>"],[0,1,"<a href=\"PromotorModel.php.html#177\">PromotorModel::update<\/a>"],[0,1,"<a href=\"PromotorModel.php.html#193\">PromotorModel::remove<\/a>"],[0,1,"<a href=\"PromotorTargetModel.php.html#26\">PromotorTargetModel::create<\/a>"],[0,1,"<a href=\"PromotorTargetModel.php.html#51\">PromotorTargetModel::getOne<\/a>"],[0,1,"<a href=\"PromotorTargetModel.php.html#66\">PromotorTargetModel::getByPromotor<\/a>"],[0,1,"<a href=\"PromotorTargetModel.php.html#81\">PromotorTargetModel::getAll<\/a>"],[0,1,"<a href=\"PromotorTargetModel.php.html#94\">PromotorTargetModel::getAllByDealer<\/a>"],[0,1,"<a href=\"PromotorTargetModel.php.html#110\">PromotorTargetModel::getAllByMonth<\/a>"],[0,1,"<a href=\"PromotorTargetModel.php.html#127\">PromotorTargetModel::update<\/a>"],[0,1,"<a href=\"PromotorTargetModel.php.html#147\">PromotorTargetModel::updatePromotorMeta<\/a>"],[0,1,"<a href=\"PromotorTargetModel.php.html#168\">PromotorTargetModel::removeByPromotor<\/a>"],[0,1,"<a href=\"RegionModel.php.html#21\">RegionModel::create<\/a>"],[0,1,"<a href=\"RegionModel.php.html#40\">RegionModel::getOne<\/a>"],[0,1,"<a href=\"RegionModel.php.html#53\">RegionModel::getAll<\/a>"],[0,1,"<a href=\"RegionModel.php.html#66\">RegionModel::update<\/a>"],[100,1,"<a href=\"RegionModel.php.html#82\">RegionModel::remove<\/a>"],[0,1,"<a href=\"RegionModel.php.html#84\">RegionModel::anonymous function<\/a>"],[0,3,"<a href=\"ReportModel.php.html#22\">ReportModel::create<\/a>"],[0,1,"<a href=\"ReportModel.php.html#68\">ReportModel::getOne<\/a>"],[0,1,"<a href=\"ReportModel.php.html#81\">ReportModel::getByDateDealer<\/a>"],[0,1,"<a href=\"ReportModel.php.html#112\">ReportModel::getByDatePromotor<\/a>"],[0,1,"<a href=\"ReportModel.php.html#138\">ReportModel::getByMonthDealer<\/a>"],[0,1,"<a href=\"ReportModel.php.html#172\">ReportModel::getByMonthTargetPromotor<\/a>"],[0,1,"<a href=\"ReportModel.php.html#192\">ReportModel::getReportPromotorByMonth<\/a>"],[0,1,"<a href=\"ReportModel.php.html#222\">ReportModel::getDisplayReportPromotorByMonth<\/a>"],[0,1,"<a href=\"ReportModel.php.html#252\">ReportModel::getOneReportPromotor<\/a>"],[0,1,"<a href=\"ReportModel.php.html#283\">ReportModel::getByMonthTargetPromotorData<\/a>"],[0,1,"<a href=\"ReportModel.php.html#308\">ReportModel::getByMonthTargetDealer<\/a>"],[0,1,"<a href=\"ReportModel.php.html#331\">ReportModel::getByMonthTargetDealerData<\/a>"],[0,1,"<a href=\"ReportModel.php.html#355\">ReportModel::getByMonthComparisonByPromotor<\/a>"],[0,1,"<a href=\"ReportModel.php.html#379\">ReportModel::getTargetSalesArco<\/a>"],[0,1,"<a href=\"ReportModel.php.html#401\">ReportModel::getSalesArco<\/a>"],[0,1,"<a href=\"ReportModel.php.html#432\">ReportModel::getTargetSalesRegion<\/a>"],[0,1,"<a href=\"ReportModel.php.html#457\">ReportModel::getSalesRegion<\/a>"],[0,2,"<a href=\"ReportModel.php.html#488\">ReportModel::getTargetSalesBranchByRegionArco<\/a>"],[0,2,"<a href=\"ReportModel.php.html#532\">ReportModel::getSalesBranchByRegionArco<\/a>"],[0,2,"<a href=\"ReportModel.php.html#576\">ReportModel::getTargetSalesAccountByBranchTL<\/a>"],[0,2,"<a href=\"ReportModel.php.html#619\">ReportModel::getSalesAccountByBranchTL<\/a>"],[0,1,"<a href=\"ReportModel.php.html#664\">ReportModel::getTargetSalesAccountByTL<\/a>"],[0,1,"<a href=\"ReportModel.php.html#695\">ReportModel::getSalesAccountByTL<\/a>"],[0,2,"<a href=\"ReportModel.php.html#727\">ReportModel::getTargetSalesBranchByTL<\/a>"],[0,2,"<a href=\"ReportModel.php.html#762\">ReportModel::getSalesBranchByTL<\/a>"],[0,1,"<a href=\"ReportModel.php.html#798\">ReportModel::getTargetSalesTl<\/a>"],[0,1,"<a href=\"ReportModel.php.html#821\">ReportModel::getSalesTl<\/a>"],[0,1,"<a href=\"ReportModel.php.html#853\">ReportModel::getTargetSalesAccount<\/a>"],[0,1,"<a href=\"ReportModel.php.html#876\">ReportModel::getSalesAccount<\/a>"],[0,1,"<a href=\"ReportModel.php.html#907\">ReportModel::getTargetSalesDealer<\/a>"],[0,1,"<a href=\"ReportModel.php.html#930\">ReportModel::getSalesDealer<\/a>"],[0,1,"<a href=\"ReportModel.php.html#961\">ReportModel::getTargetSalesPromotor<\/a>"],[0,1,"<a href=\"ReportModel.php.html#984\">ReportModel::getSalesPromotor<\/a>"],[0,1,"<a href=\"ReportModel.php.html#1014\">ReportModel::update<\/a>"],[0,1,"<a href=\"ReportModel.php.html#1034\">ReportModel::updatePromotorMeta<\/a>"],[0,1,"<a href=\"ReportModel.php.html#1054\">ReportModel::remove<\/a>"],[0,3,"<a href=\"ReportSaleModel.php.html#21\">ReportSaleModel::create<\/a>"],[0,1,"<a href=\"ReportSaleModel.php.html#63\">ReportSaleModel::getData<\/a>"],[0,1,"<a href=\"ReportStockModel.php.html#22\">ReportStockModel::create<\/a>"],[0,1,"<a href=\"ReportStockModel.php.html#45\">ReportStockModel::getOne<\/a>"],[0,1,"<a href=\"ReportStockModel.php.html#62\">ReportStockModel::getPagination<\/a>"],[0,1,"<a href=\"ReportStockModel.php.html#91\">ReportStockModel::update<\/a>"],[0,1,"<a href=\"TokenModel.php.html#20\">TokenModel::encode<\/a>"],[0,3,"<a href=\"TokenModel.php.html#48\">TokenModel::decode<\/a>"],[60,2,"<a href=\"UserMetaModel.php.html#24\">UserMetaModel::set<\/a>"],[100,1,"<a href=\"UserMetaModel.php.html#60\">UserMetaModel::get<\/a>"],[100,1,"<a href=\"UserMetaModel.php.html#75\">UserMetaModel::getOne<\/a>"],[100,1,"<a href=\"UserMetaModel.php.html#87\">UserMetaModel::getByName<\/a>"],[100,1,"<a href=\"UserMetaModel.php.html#102\">UserMetaModel::update<\/a>"],[100,1,"<a href=\"UserMetaModel.php.html#117\">UserMetaModel::getByContent<\/a>"],[100,1,"<a href=\"UserMetaModel.php.html#132\">UserMetaModel::remove<\/a>"],[100,1,"<a href=\"UserModel.php.html#23\">UserModel::create<\/a>"],[100,1,"<a href=\"UserModel.php.html#44\">UserModel::getOne<\/a>"],[0,1,"<a href=\"UserModel.php.html#55\">UserModel::getAll<\/a>"],[100,1,"<a href=\"UserModel.php.html#68\">UserModel::getByEmail<\/a>"],[0,1,"<a href=\"UserModel.php.html#80\">UserModel::getByUsername<\/a>"],[100,1,"<a href=\"UserModel.php.html#93\">UserModel::update<\/a>"],[0,1,"<a href=\"UserModel.php.html#109\">UserModel::remove<\/a>"]], 'Method Complexity'))
+      .transition()
+      .duration(500)
+      .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  function getComplexityData(data, label) {
+    var values = [];
+    $.each(data, function(key) {
+      var value = Math.round(data[key][0]*100) / 100;
+      values.push({
+        x: value,
+        y: data[key][1],
+        class: data[key][2],
+        size: 0.05,
+        shape: 'diamond'
+      });
+    });
+
+    return [
+      {
+        key: label,
+        values: values,
+        color: "#4572A7"
+      }
+    ];
+  }
+});
+  </script>
+ </body>
+</html>

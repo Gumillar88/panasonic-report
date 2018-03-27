@@ -1,0 +1,271 @@
+<?php
+namespace Tests\Controllers\API\V_1_5_0;
+
+use Hash;
+use TestCase;
+
+use Illuminate\Foundation\Testing\WithoutMiddleware;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+
+use App\Http\Models\PromotorModel;
+use App\Http\Models\PromotorMetaModel;
+use App\Http\Models\AbsenceModel;
+use App\Http\Models\TokenModel;
+
+class AbsenceControllerTest extends TestCase
+{
+    use WithoutMiddleware;
+    
+    /**
+     * Promotor model container
+     *
+     * @access protected
+     */
+    protected $promotor;
+
+    /**
+     * Promotor meta model container
+     *
+     * @access protected
+     */
+    protected $promotorMeta;
+    
+    /**
+     * News model container
+     *
+     * @access protected
+     */
+    protected $absence;
+    
+    /**
+     * Token model container
+     *
+     * @access protected
+     */
+    protected $token;
+    
+    /**
+     * Promotor data sample
+     *
+     * @access protected
+     */
+    protected $promotorData = [
+        'dealer_ID'     => 1,
+        'phone'         => '+6280010003000',
+        'phoneNormal'   => '080010003000',
+        'password'      => '1234',
+        'name'          => 'Alfian',
+        'gender'        => 'male',
+        'type'          => 'promotor',
+        'parent_ID'     => 0,
+    ];
+
+     /**
+     * Absence data sample
+     *
+     * @access protected
+     */
+    protected $absenceData = [
+        'promotor_ID'   => 1,
+        'reason'        => 'Absensce',
+    ];
+
+    /**
+     * Object constructor
+     *
+     * @access public
+     * @return Void
+     */
+    public function __construct()
+    {
+        $this->promotor         = new PromotorModel();
+        $this->promotorMeta    = new PromotorMetaModel();
+        $this->absence          = new AbsenceModel();
+        $this->token            = new TokenModel();
+    }
+    
+    /**
+     * Populate promotor database with promotor data
+     *
+     * @access private
+     * @return Integer
+     */
+    private function _populatePromotor()
+    {
+        return $this->promotor->create(
+            $this->promotorData['dealer_ID'], 
+            $this->promotorData['phone'], 
+            Hash::make($this->promotorData['password']), 
+            $this->promotorData['name'], 
+            $this->promotorData['gender'], 
+            $this->promotorData['type'], 
+            $this->promotorData['parent_ID']
+        );
+    }
+
+    /**
+     * Populate absence database with promotor data
+     *
+     * @access private
+     * @return Integer
+     */
+    private function _populateAbsence()
+    {
+        return $this->absence->create(
+            $this->absenceData['promotor_ID'], 
+            $this->absenceData['reason'], 
+            date('Y-m-d', time())
+        );
+    }
+    
+    /**
+     * Test absence check with no token
+     *
+     * @access public
+     * @group API
+     * @group API-1.5.0
+     * @group API-1.5.0-AbsenceController
+     * @return Void
+     */
+    public function testCheckAbsenceNoToken()
+    {
+        // Do Request
+        $this->_request('GET', '/api/1.5.0/absence-check')
+            ->_result(['error' => 'no-token']);
+    }
+    
+    /**
+     * Test check absence with invalid promotor token
+     *
+     * @access public
+     * @group API
+     * @group API-1.5.0
+     * @group API-1.5.0-AbsenceController
+     * @return Void
+     */
+    public function testCheckAbsenceWithInvalidPromotorToken()
+    {
+        // Populate data
+        $promotorID = $this->_populatePromotor();
+        
+        // Create token
+        $token = str_random(5);
+        $encryptedToken = $this->token->encode($promotorID, $token);
+        
+        // Do request
+        $this->_request('GET', '/api/1.5.0/absence-check', ['token' => '1234'])
+            ->_result(['error' => 'no-auth']);
+    }
+
+    /**
+     * Test check absence with valid promotor token and already absence
+     * 
+     * @access public
+     * @group API
+     * @group API-1.5.0
+     * @group API-1.5.0-AbsenceController
+     * @return Void
+     */
+    public function testCheckAbsenceWithValidPromotorTokenAndAbsence()
+    {
+        // Populate data
+        $promotorID = $this->_populatePromotor();
+        $absenceID = $this->_populateAbsence();
+        
+        // Create token
+        $token = str_random(5);
+        $encryptedToken = $this->token->encode($promotorID, $token);
+        
+        // Do request
+        $this->_request('GET', '/api/1.5.0/absence-check', ['token' => $encryptedToken])
+            ->_result(['result' => 1]);
+    }
+
+    /**
+     * Test check absence with valid promotor token and not yet absence
+     * 
+     * @access public
+     * @group API
+     * @group API-1.5.0
+     * @group API-1.5.0-AbsenceController
+     * @return Void
+     */
+    public function testCheckAbsenceWithValidPromotorTokenAndNoAbsence()
+    {
+        // Populate data
+        $promotorID = $this->_populatePromotor();
+        
+        // Create token
+        $token = str_random(5);
+        $encryptedToken = $this->token->encode($promotorID, $token);
+        
+        // Do request
+        $this->_request('GET', '/api/1.5.0/absence-check', ['token' => $encryptedToken])
+            ->_result(['result' => 0]);
+    }
+
+    /**
+     * Test absence create with no token
+     *
+     * @access public
+     * @group API
+     * @group API-1.5.0
+     * @group API-1.5.0-AbsenceController
+     * @return Void
+     */
+    public function testCreateNoToken()
+    {
+        // Do Request
+        $this->_request('POST', '/api/1.5.0/absence-create')
+            ->_result(['error' => 'no-token']);
+    }
+
+    /**
+     * Test absence create with invalid promotor token
+     *
+     * @access public
+     * @group API
+     * @group API-1.5.0
+     * @group API-1.5.0-AbsenceController
+     * @return Void
+     */
+    public function testCreateWithInvalidPromotorToken()
+    {
+        // Populate data
+        $promotorID = $this->_populatePromotor();
+        
+        // Create token
+        $token = str_random(5);
+        $encryptedToken = $this->token->encode($promotorID, $token);
+        
+        // Do request
+        $this->_request('POST', '/api/1.5.0/absence-create', ['token' => '1234'])
+            ->_result(['error' => 'no-auth']);
+    }
+
+    /**
+     * Test create absence with valid promotor token
+     * 
+     * @access public
+     * @group API
+     * @group API-1.5.0
+     * @group API-1.5.0-AbsenceController
+     * @return Void
+     */
+    public function testCreateWithValidPromotorToken()
+    {
+        // Populate data
+        $promotorID = $this->_populatePromotor();
+        
+        // Create token
+        $token = str_random(5);
+        $encryptedToken = $this->token->encode($promotorID, $token);
+        
+        // Do request
+        $this->_request('POST', '/api/1.5.0/absence-create', ['token' => $encryptedToken, 'action' => 'Sakit'])
+            ->_result(['result' => 'success']);
+    }
+
+    
+}

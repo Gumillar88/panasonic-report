@@ -1,0 +1,6 @@
+/vendor/.git
+/node_modules
+Homestead.yaml
+.env
+/public/phpmyadmin
+/vendor/

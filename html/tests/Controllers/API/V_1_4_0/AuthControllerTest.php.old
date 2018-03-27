@@ -1,0 +1,386 @@
+<?php
+namespace Tests\Controllers\API\V_1_4_0;
+
+use Hash;
+use TestCase;
+
+use Illuminate\Foundation\Testing\WithoutMiddleware;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+
+use App\Http\Models\PromotorModel;
+use App\Http\Models\PromotorMetaModel;
+use App\Http\Models\TokenModel;
+
+class AuthControllerTest extends TestCase
+{
+    use WithoutMiddleware;
+    
+    /**
+     * Promotor model container
+     *
+     * @access protected
+     */
+    protected $promotor;
+    
+    /**
+     * Promotor meta model container
+     *
+     * @access protected
+     */
+    protected $promotorMeta;
+    
+    /**
+     * Token model container 
+     *
+     * @access protected
+     */
+    protected $token;
+    
+    /**
+     * Promotor data sample
+     *
+     * @access protected
+     */
+    protected $promotorData = [
+        'dealer_ID'     => 1,
+        'phone'         => '+6280010003000',
+        'phoneNormal'   => '080010003000',
+        'password'      => '1234',
+        'name'          => 'Alfian',
+        'gender'        => 'male',
+        'type'          => 'promotor',
+        'parent_ID'     => 0,
+    ];
+    
+    /**
+     * Object constructor
+     *
+     * @access public
+     * @return Void
+     */
+    public function __construct()
+    {
+        $this->promotor = new PromotorModel();
+        $this->promotorMeta = new PromotorMetaModel();
+        $this->token = new TokenModel();
+    }
+    
+    /**
+     * Populate database with promotor data
+     *
+     * @access private
+     * @return Integer
+     */
+    private function _populate()
+    {
+        return $this->promotor->create(
+            $this->promotorData['dealer_ID'], 
+            $this->promotorData['phone'], 
+            Hash::make($this->promotorData['password']), 
+            $this->promotorData['name'], 
+            $this->promotorData['gender'], 
+            $this->promotorData['type'], 
+            $this->promotorData['parent_ID']
+        );
+    }
+    
+    /**
+     * Test auth check with no token
+     *
+     * @access public
+     * @group API
+     * @group API-1.4.0
+     * @group API-1.4.0-AuthController
+     * @return Void
+     */
+    public function testCheckNoToken()
+    {
+        // Do Request
+        $this->_request('GET', '/api/1.4.0/check')
+            ->_result(['error' => 'no-token']);
+    }
+    
+    /**
+     * Test auth check with invalid promotor token
+     *
+     * @access public
+     * @group API
+     * @group API-1.4.0
+     * @group API-1.4.0-AuthController
+     * @return Void
+     */
+    public function testCheckWithInvalidPromotorToken()
+    {
+        // Populate data
+        $promotorID = $this->_populate();
+        
+        // Create token
+        $token = str_random(5);
+        $encryptedToken = $this->token->encode($promotorID, $token);
+        
+        // Do request
+        $this->_request('GET', '/api/1.4.0/check', ['token' => '1234'])
+            ->_result(['ID' => 0]);
+    }
+    
+    /**
+     * Test check auth with valid promotor token but promotor blocked
+     *
+     * @access public
+     * @group API
+     * @group API-1.4.0
+     * @group API-1.4.0-AuthController
+     * @return Void
+     */
+    public function testCheckWithValidPromotorTokenWithBlock()
+    {
+        // Populate data
+        $promotorID = $this->_populate();
+        
+        // Create token
+        $token = str_random(5);
+        $encryptedToken = $this->token->encode($promotorID, $token);
+        
+        // Block request
+        $this->promotorMeta->set($promotorID, 'block', 'block');
+        
+        // Do request
+        $this->_request('GET', '/api/1.4.0/check', ['token' => $encryptedToken])
+            ->_result(['ID' => 0]);
+    }
+    
+    /**
+     * Test check auth with valid promotor token but promotor blocked
+     * 
+     * @access public
+     * @group API
+     * @group API-1.4.0
+     * @group API-1.4.0-AuthController
+     * @return Void
+     */
+    public function testCheckWithValidPromotorToken()
+    {
+        // Populate data
+        $promotorID = $this->_populate();
+        
+        // Create token
+        $token = str_random(5);
+        $encryptedToken = $this->token->encode($promotorID, $token);
+        
+        // Do request
+        $this->_request('GET', '/api/1.4.0/check', ['token' => $encryptedToken])
+            ->_result(['ID' => $promotorID]);
+    }
+    
+    /**
+     * Test login with missing parameter
+     * 
+     * @access public
+     * @group API
+     * @group API-1.4.0
+     * @group API-1.4.0-AuthController
+     * @return Void
+     */
+    public function testLoginMissingParameter()
+    {
+        // Do request
+        $this->_request('POST', '/api/1.4.0/login', ['phone' => '1234'])
+            ->_result(['error' => 'login-error']);
+    }
+    
+    /**
+     * Test login with invalid promotor data
+     * 
+     * @access public
+     * @group API
+     * @group API-1.4.0
+     * @group API-1.4.0-AuthController
+     * @return Void
+     */
+    public function testLoginPromotorInvalid()
+    {
+        // Do request
+        $this->_request('POST', '/api/1.4.0/login', ['phone' => '1234', 'password' => '1234'])
+            ->_result(['error' => 'login-error']);
+    }
+    
+    /**
+     * Test login with havas password
+     * 
+     * @access public
+     * @group API
+     * @group API-1.4.0
+     * @group API-1.4.0-AuthController
+     * @return Void
+     */
+    public function testLoginPromotorWithHavasPasswordDifferentInput()
+    {
+        // Populate
+        $promotorID = $this->_populate();
+        $this->promotor->update($promotorID, ['password' => 'havas']);
+        
+        // Do request
+        $params = [
+            'phone'     => $this->promotorData['phoneNormal'], 
+            'password'  => '12345'
+        ];
+        
+        $this->_request('POST', '/api/1.4.0/login', $params)
+            ->_result(['error' => 'login-error']);
+    }
+    
+    /**
+     * Test login with havas password
+     * 
+     * @access public
+     * @group API
+     * @group API-1.4.0
+     * @group API-1.4.0-AuthController
+     * @return Void
+     */
+    public function testLoginPromotorWithHavasPassword()
+    {
+        // Populate
+        $promotorID = $this->_populate();
+        $this->promotor->update($promotorID, ['password' => 'havas']);
+        
+        // Do request
+        $params = [
+            'phone' => $this->promotorData['phoneNormal'], 
+            'password' => 'havas'
+        ];
+        
+        $response   = $this->call('POST', '/api/1.4.0/login', $params);
+        $result     = json_decode($response->getContent(), true);
+        
+        // Verify
+        $this->assertTrue(array_key_exists('user_type', $result));
+        $this->assertTrue(array_key_exists('user_token', $result));
+        $this->assertTrue(array_key_exists('token', $result));
+        
+        $this->assertEquals($this->promotorData['type'], $result['user_type']);
+        $this->assertEquals(false, $result['user_token']);
+    }
+    
+    /**
+     * Test login with wrong password
+     * 
+     * @access public
+     * @group API
+     * @group API-1.4.0
+     * @group API-1.4.0-AuthController
+     * @return Void
+     */
+    public function testLoginPromotorWrongPassword()
+    {
+        // Populate
+        $promotorID = $this->_populate();
+        
+        // Do request
+        $params = [
+            'phone'     => $this->promotorData['phoneNormal'], 
+            'password'  => 'havas'
+        ];
+        
+        $this->_request('POST', '/api/1.4.0/login', $params)
+            ->_result([
+                'error' => 'login-error', 
+                'msg'   => 'hash'
+            ]);
+    }
+    
+    /**
+     * Test login with correct password but account blocked
+     * 
+     * @access public
+     * @group API
+     * @group API-1.4.0
+     * @group API-1.4.0-AuthController
+     * @return Void
+     */
+    public function testLoginPromotorBlocked()
+    {
+        // Populate
+        $promotorID = $this->_populate();
+        $this->promotorMeta->set($promotorID, 'block', 'block');
+        
+        // Do request
+        $params = [
+            'phone'     => $this->promotorData['phoneNormal'], 
+            'password'  => $this->promotorData['password']
+        ];
+        
+        $this->_request('POST', '/api/1.4.0/login', $params)
+            ->_result(['error' => 'login-error']);
+    }
+    
+    
+    
+    /**
+     * Test login with correct password and success but with branch manager type (quick fix)
+     * 
+     * @access public
+     * @group API
+     * @group API-1.4.0
+     * @group API-1.4.0-AuthController
+     * @return Void
+     */
+    public function testLoginPromotorSuccessWithBranchManagerType()
+    {
+        // Populate
+        $promotorID = $this->_populate();
+        
+        // Update to branch manager
+        $this->promotor->update($promotorID, ['type' => 'branch-manager']);
+        
+        // Do request
+        $params = [
+            'phone'     => $this->promotorData['phoneNormal'], 
+            'password'  => $this->promotorData['password']
+        ];
+        
+        $response   = $this->call('POST', '/api/1.4.0/login', $params);
+        $result     = json_decode($response->getContent(), true);
+        
+        // Verify
+        $this->assertTrue(array_key_exists('user_type', $result));
+        $this->assertTrue(array_key_exists('user_token', $result));
+        $this->assertTrue(array_key_exists('token', $result));
+        
+        $this->assertEquals('tl', $result['user_type']);
+        $this->assertEquals(true, $result['user_token']);
+    }
+    
+    /**
+     * Test login with correct password and success
+     * 
+     * @access public
+     * @group API
+     * @group API-1.4.0
+     * @group API-1.4.0-AuthController
+     * @return Void
+     */
+    public function testLoginPromotorSuccess()
+    {
+        // Populate
+        $promotorID = $this->_populate();
+        
+        // Do request
+        $params = [
+            'phone'     => $this->promotorData['phoneNormal'], 
+            'password'  => $this->promotorData['password']
+        ];
+        
+        $response   = $this->call('POST', '/api/1.4.0/login', $params);
+        $result     = json_decode($response->getContent(), true);
+        
+        // Verify
+        $this->assertTrue(array_key_exists('user_type', $result));
+        $this->assertTrue(array_key_exists('user_token', $result));
+        $this->assertTrue(array_key_exists('token', $result));
+        
+        $this->assertEquals($this->promotorData['type'], $result['user_type']);
+        $this->assertEquals(true, $result['user_token']);
+    }
+}

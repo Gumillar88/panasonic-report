@@ -1,0 +1,1158 @@
+<?php
+
+namespace App\Http\Controllers\API\V_1_4_0;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Http\Models\DealerModel;
+use App\Http\Models\DealerTypeModel;
+use App\Http\Models\DealerAccountModel;
+use App\Http\Models\PromotorModel;
+use App\Http\Models\ReportModel;
+use App\Http\Models\ProductCategoryModel;
+use App\Http\Models\ProductModel;
+use App\Http\Models\ProductPriceModel;
+use App\Http\Models\TokenModel;
+use App\Http\Models\BranchModel;
+use App\Http\Models\RegionModel;
+use App\Http\Models\ReportSaleModel;
+use Carbon\Carbon;
+
+class ReportController extends Controller
+{
+    /**
+     * Dealer model container
+     *
+     * @access protected
+     */
+    protected $dealer;
+
+    /**
+     * dealer account model container
+     *
+     * @access Protected
+     */
+    protected $dealer_account;
+    
+    /**
+     * Promotor model container
+     *
+     * @access protected
+     */
+    protected $promotor;
+    
+    /**
+     * Report model container
+     *
+     * @access protected
+     */
+    protected $report;
+    
+    /**
+     * Product Category model container
+     *
+     * @access protected;
+     */
+    protected $productCategory;
+    
+    /**
+     * Product Type model container
+     *
+     * @access protected
+     */
+    protected $productType;
+    
+    /**
+     * Product model container
+     *
+     * @access protected
+     */
+    protected $product;
+
+    /**
+     * Product price model container
+     *
+     * @access Protected
+     */
+    protected $product_price;
+    
+    /**
+     * Token model container
+     *
+     * @access protected
+     */
+    protected $token;
+
+    /**
+     * Report No Sale model container
+     *
+     * @access protected
+     */
+    protected $report_sale;
+    
+    /**
+     * Branch model container
+     *
+     * @access protected
+     */
+    protected $branch;
+    
+    /**
+     * Region model container
+     *
+     * @access protected
+     */
+    protected $region;
+    
+    /**
+     * Object constructor
+     *
+     * @access public
+     * @return Void
+     */
+    public function __construct()
+    {
+        $this->dealer           = new DealerModel();
+        $this->dealer_type      = new DealerTypeModel();
+        $this->dealer_account   = new DealerAccountModel();
+        $this->promotor         = new PromotorModel();
+        $this->report           = new ReportModel();
+        $this->productCategory  = new ProductCategoryModel();
+        $this->product          = new ProductModel();
+        $this->product_price    = new ProductPriceModel();
+        $this->token            = new TokenModel();
+        $this->report_sale      = new ReportSaleModel();
+        $this->branch           = new BranchModel();
+        $this->region           = new RegionModel();
+    }
+    
+    
+    /**
+     * Handle create new report request
+     *
+     * @access public
+     * @param Request $request
+     * @return Response
+     */
+    public function create(Request $request)
+    {
+        // Validate parameter
+        $productID              = $request->get('productID', 0);
+        $dateValue              = $request->get('date', 0);
+        $quantity               = $request->get('quantity', false);
+        $token                  = $request->get('token', false);
+        $custom_name            = $request->get('custom_name', '');
+        $price                  = $request->get('price', false);
+        $productCombinationID   = $request->get('productCombinationID', false);
+        
+        if (!$token)
+        {
+            return response()->json(['error' => 'no-token']);
+        }
+
+        if (($productID === 0) && ($custom_name === ''))
+        {
+            return response()->json(['error' => 'no-product-id']);
+        }
+        
+        if (!$quantity)
+        {
+            return response()->json(['error' => 'no-quantity']);
+        }
+        
+        // Validate user
+        $promotorID = $this->token->decode($token);
+        $promotor   = $this->promotor->getOne($promotorID);
+        
+        if (!$promotor)
+        {
+            return response()->json(['error' => 'no-auth']);
+        }
+        
+        // Set dealer
+        $dealer     = $this->dealer->getOne($promotor->dealer_ID);
+        
+        // Set date
+        $date = Carbon::now();
+        
+        if ($dateValue == 0)
+        {
+            $date = Carbon::yesterday();
+        }
+        
+        if(!$request->has('custom_name'))
+        {
+            // Validate product
+            $product = $this->product->getOne($productID);
+            
+            if (!$product) 
+            {
+                return response()->json(['error' => 'no-product']);
+            }
+
+            // Check product price based on dealer id
+            $price              = $product->price;
+            $typePrice          = $this->product_price->getDealerProduct($promotor->dealer_ID, $productID, $dealer->dealer_channel_ID);
+            
+            if ($typePrice !== null)
+            {
+                $price  = $typePrice->price;
+            }
+            
+        }
+
+
+        // GET TL ID , ARCO ID 
+        $dealer_ID      = $promotor->dealer_ID;
+        
+        //Get one dealer
+        $dealer         = $this->dealer->getOne($dealer_ID);
+        
+        //Get tl from branch
+        $TL         = $this->promotor->getOne($promotor->parent_ID);
+
+        // Save data
+        $this->report->create([
+            'dealer_ID'         => $promotor->dealer_ID, 
+            'promotor_ID'       => $promotorID, 
+            'account_ID'        => $dealer->dealer_account_ID, 
+            'tl_ID'             => $TL->ID, 
+            'arco_ID'           => $TL->parent_ID, 
+            'customer_ID'       => 0,
+            'product_model_ID'  => $productID, 
+            'custom_name'       => $custom_name, 
+            'price'             => $price, 
+            'quantity'          => $quantity, 
+            'date'              => $date
+        ]);
+        
+        if($productCombinationID != 0)
+        {
+            $productCombination = $this->product->getOne($productCombinationID);
+            
+            if ($productCombination !== null) 
+            {
+                // Check product price based on dealer id
+                $productCombinationPrice        = $productCombination->price;
+                $productCombinationTypePrice    = $this->product_price->getDealerProduct($promotor->dealer_ID, $productCombinationID, $dealer->dealer_channel_ID);
+                
+                if ($productCombinationTypePrice !== null)
+                {
+                    $productCombinationPrice  = $productCombinationTypePrice->price;
+                }
+                
+                $this->report->create([
+                    'dealer_ID'         => $promotor->dealer_ID, 
+                    'promotor_ID'       => $promotorID, 
+                    'account_ID'        => $dealer->dealer_account_ID, 
+                    'tl_ID'             => $TL->ID, 
+                    'arco_ID'           => $TL->parent_ID, 
+                    'customer_ID'       => 0,
+                    'product_model_ID'  => $productCombinationID, 
+                    'custom_name'       => '', 
+                    'price'             => $productCombinationPrice, 
+                    'quantity'          => $quantity, 
+                    'date'              => $date
+                ]);
+            }
+        }
+        
+        // Return success
+        return response()->json(['result' => 'success']);
+    }
+
+    /**
+     * Handle list of reports request
+     *
+     * @access public
+     * @param Request $request
+     * @return Response
+     */
+    public function getList(Request $request)
+    {
+        // Validate parameter
+        $date   = $request->get('date', false);
+        $token  = $request->get('token', false);
+        
+        if (!$token)
+        {
+            return response()->json(['error' => 'no-token']);
+        }
+        
+        if (!$date)
+        {
+            return response()->json(['error' => 'no-date']);
+        }
+        
+        // Validate user
+        $promotorID = $this->token->decode($token);
+        $promotor   = $this->promotor->getOne($promotorID);
+        
+        if (!$promotorID)
+        {
+            return response()->json(['error' => 'no-auth']);
+        }
+        
+        // Get data
+        $data = [
+            'promotorID'    => $promotorID,
+            'dealer'        => $this->dealer->getOne($promotor->dealer_ID),
+            'reports'       => $this->report->getByDatePromotor($promotorID, $date)
+        ];
+        
+        return response()->json(['result' => $data]);
+    }
+
+
+    /**
+     * Get sales target
+     * @access public
+     * @param  Request $request 
+     * @return Response
+     */
+    public function getSales(Request $request)
+    {
+        
+        // Validate parameter
+        $token  = $request->get('token', false);
+        
+        if (!$token)
+        {
+            return response()->json(['error' => 'no-token']);
+        }
+        
+        $promotorID = $this->token->decode($token);
+        $promotor   = $this->promotor->getOne($promotorID);
+        
+        if (!$promotor)
+        {
+            return response()->json(['error' => 'no-auth']);
+        }
+
+        //initialite variable
+        $totalTargetPromotor        = 0;
+        $totalTargetDealer          = 0;
+        $totalTargetPromotorData    = 0;
+        $totalTargetDealerData      = 0;
+        $comparisonData             = 0;
+        $comparisonTarget           = 0;
+
+
+        //set time YYYY-MM
+        $time = date('Y-m', time());
+
+        //set date YYYY-MM-01
+        $date = date('Y-m-01', time());
+
+        //set current date 
+        $curDate = date('Y-m-d', time());
+
+        $lastMonth              = date('Y-m', strtotime("-1 month"));
+        $firstDayOfLastMonth    = date("Y-m-01", strtotime("-1 month"));
+        $dayOFLastMonth         = date("Y-m-d", strtotime("-1 month"));
+        
+        // Compile promotor report for current month
+        // DATA SALES MONTH PROMOTOR
+        $promotorReportData = $this->report->getReportPromotorByMonth($promotor->ID, $time);
+
+        //TARGET PROMOTOR
+        $targetPromotor = $this->report->getByMonthTargetPromotor($promotor->ID, $time);
+        $totalTargetPromotor = 0;
+        
+        if ($targetPromotor)
+        {
+            $totalTargetPromotor = $targetPromotor->total;
+        }
+        
+        $targetPromotorCompiled = [];
+        
+        foreach ($promotorReportData as $key => $value) 
+        {
+            if (!array_key_exists($value->product_model_ID, $targetPromotorCompiled))
+            {
+                // Set compiled data
+                $tempData = [
+                    'product_ID'    => $value->product_model_ID,
+                    'product_name'  => $value->name,
+                    'price'         => $value->price,
+                    'quantity'      => 0,
+                ];
+
+                // Push data to container
+                $targetPromotorCompiled[$value->product_model_ID] = $tempData;
+            }
+            
+            // Increment quantity
+            $targetPromotorCompiled[$value->product_model_ID]['quantity'] += $value->quantity;
+            
+            // Count promotor data
+            $totalTargetPromotorData += $value->quantity * $value->price;
+        }
+
+        /**
+         * GET TARGET DEALER
+         */
+        $targetDealer = $this->report->getByMonthTargetDealer($promotor->dealer_ID, $time);
+        
+        foreach ($targetDealer as $key => $value) 
+        {
+            // Calculate price
+            $totalTargetDealer +=  $value->total;
+            
+        }
+
+        //get target dealer data
+        $targetDealerData = $this->report->getByMonthTargetDealerData($promotor->dealer_ID, $date,$curDate);
+        
+        foreach ($targetDealerData as $item) 
+        {
+            $totalTargetDealerData += $item->price * $item->quantity;
+
+        }
+
+        /**
+         * COMPARISON PRICE
+         */
+        $comparisonTarget = 1;
+        $comparisonData = 0;
+        
+        //get target promotor last month
+        $comparisonTargetPromotorLastMonth = $this->report->getByMonthTargetPromotor($promotor->ID, $lastMonth);
+        
+        if ($comparisonTargetPromotorLastMonth)
+        {
+            $comparisonTarget = $comparisonTargetPromotorLastMonth->total;
+        }
+
+        $comparisonTargetPromotorLastMonthData = $this->report->getByMonthComparisonByPromotor($promotor->ID, $firstDayOfLastMonth, $dayOFLastMonth);
+        
+        if ($comparisonTargetPromotorLastMonthData)
+        {
+            foreach ($comparisonTargetPromotorLastMonthData as $key => $value) 
+            {   
+                // Add quantity to compiled data and get price from dealer
+                $comparisonData += $value->quantity * $value->price;
+            }
+            
+        }
+
+        $data= [
+            'targetPromotorProduct' => $targetPromotorCompiled,
+            'targetPromotor'        => $totalTargetPromotor,
+            'targetPromotorData'    => $totalTargetPromotorData,
+            'targetDealer'          => $totalTargetDealer,
+            'targetDealerData'      => $totalTargetDealerData,
+            'comparison'            => $comparisonTarget,
+            'comparisonData'        => $comparisonData,
+        ];
+        
+        /**
+         * Return report
+         */
+        return response()->json(['result' => $data]);
+    }
+
+    /**
+     * Get salest target by region (previously ARCO)
+     *
+     * @access public
+     * @param Request $request
+     * @return Response
+     */
+    public function getSalesRegion(Request $request)
+    {
+        // Validate parameter
+        $token  = $request->get('token', false);
+        
+        if (!$token)
+        {
+            return response()->json(['error' => 'no-token']);
+        }
+        
+        $promotorID = $this->token->decode($token);
+        $promotor   = $this->promotor->getOne($promotorID);
+        
+        if (!$promotor)
+        {
+            return response()->json(['error' => 'no-auth']);
+        }
+        
+        if ($promotor->type !== 'panasonic')
+        {
+            return response()->json(['error' => 'no-auth']);
+        }
+
+        // Set time YYYY-MM
+        $time = date('Y-m', time());
+
+        $dataRegion = [];
+
+        $target = $this->report->getTargetSalesRegion($time);
+        $sales  = $this->report->getSalesRegion($time);
+        
+        foreach ($target as $item)
+        {
+            $total = 0;
+            
+            if ($item->total !== null)
+            {
+                $total = $item->total;
+            }
+            
+            $dataRegion[$item->ID] = [
+                // Use arco ID for backward compatibility, will be removed in v1.5.0
+                'ID'            => $item->ID.'-'.$item->promotor_ID, 
+                'name'          => $item->name ,
+                'target'        => $total,
+                'sales'         => 0,
+                'persentase'    => 0,
+            ];
+        }
+        
+        foreach ($sales as $item)
+        {
+            $salesData  = 0;
+            
+            if ($item->total !== null)
+            {
+                $salesData = $item->total;   
+            }
+            
+            $targetData                     = $dataRegion[$item->ID]['target'];
+            $dataRegion[$item->ID]['sales'] = number_format($item->total);
+            
+            if($salesData != 0 && $targetData != 0)
+            {
+                $dataRegion[$item->ID]['persentase'] = round(( $salesData / $targetData) * 100, 2);
+            }
+        }
+
+
+        return response()->json(['result' => $dataRegion]);
+    }
+
+    /**
+     * Get sales data by branch (previously TL)
+     *
+     * @access public
+     * @param Request $request
+     * @return Response
+     */
+    public function getSalesBranch(Request $request)
+    {
+        // Validate parameter
+        $token      = $request->get('token', false);
+        $arcoID     = $request->get('arcoID', false);
+        
+        if (!$token)
+        {
+            return response()->json(['error' => 'no-token']);
+        }
+        
+        if (!$arcoID)
+        {
+            return response()->json(['error' => 'no-ID']);
+        }
+        
+        $promotorID = $this->token->decode($token);
+        $promotor   = $this->promotor->getOne($promotorID);
+        
+        if (!$promotor)
+        {
+            return response()->json(['error' => 'no-auth']);
+        }
+        
+        // Split arco id
+        if(strpos($arcoID, '-') !== false)
+        {
+            $regionID   = explode('-', $arcoID)[0];
+            $arcoID     = explode('-', $arcoID)[1];
+        }
+        else
+        {
+            $regionID   = 0;
+            $arcoID     = $arcoID;
+        }
+        
+        //set time YYYY-MM
+        $time = date('Y-m', time());
+        
+        $dataBranch = [];
+
+        $target = $this->report->getTargetSalesBranchByRegionArco($regionID, $arcoID, $time);
+        $sales  = $this->report->getSalesBranchByRegionArco($regionID, $arcoID, $time);
+        
+        foreach ($target as $item)
+        {
+            $total = 0;
+            
+            if ($item->total !== null)
+            {
+                $total = $item->total;
+            }
+            
+            $dataBranch[$item->ID] = [
+                // Use team leader ID for backward compatibility, will be removed in v1.5.0
+                'ID'            => $item->ID.'-'.$item->promotor_ID, 
+                'name'          => $item->name,
+                'target'        => $total,
+                'sales'         => 0,
+                'persentase'    => 0,
+            ];
+        }
+        
+        foreach ($sales as $item)
+        {
+            $salesData  = 0;
+            
+            if ($item->total !== null)
+            {
+                $salesData = $item->total;   
+            }
+            
+            $dataBranch[$item->ID]['sales'] = number_format($item->total);
+            $targetData = $dataBranch[$item->ID]['target'];
+            
+            if($salesData != 0 && $targetData != 0)
+            {
+                $dataBranch[$item->ID]['persentase'] = round(( $salesData / $targetData) * 100, 2);
+            }
+        }
+        
+        
+        return response()->json(['result' => $dataBranch]);
+    }
+
+    /**
+     * Get sales data by account
+     *
+     * @access public
+     * @param Request $request
+     * @return Response
+     */
+    public function getSalesAccount(Request $request)
+    {
+        // Validate parameter
+        $token  = $request->get('token', false);
+        $TLID  = $request->get('tlID', false);
+        
+        if (!$token)
+        {
+            return response()->json(['error' => 'no-token']);
+        }
+        
+        if (!$TLID)
+        {
+            return response()->json(['error' => 'no-ID']);
+        }
+
+        $promotorID = $this->token->decode($token);
+        $promotor   = $this->promotor->getOne($promotorID);
+        $type       = '';
+        $branchID   = 0;
+        
+        if (!$promotor)
+        {
+            return response()->json(['error' => 'no-auth']);
+        }
+        
+        // Quickfix branch
+        $TLIDs = [];
+        
+        // Split team leader id
+        if(strpos($TLID, '-') !== false)
+        {
+            $branchID   = explode('-', $TLID)[0];
+            $TLID       = explode('-', $TLID)[1];
+        }
+        else
+        {
+            // Branch Manager association with tl (Quickfix)
+            $associations = [
+                '809'   => [958, 959, 960, 961], // Medan
+                '812'   => [962, 963, 964], // Pekanbaru
+                '808'   => [965, 966], // Batam
+                '807'   => [976, 968, 969, 970], // Palembang
+                '810'   => [971, 972, 973], // Semarang
+                '1186'  => [974, 975, 976, 977, 978, 1017], // Jatim Tradi
+                '1067'  => [974, 975, 976, 977, 978, 1017], // Jatim Modern
+                '803'   => [979, 980], // Bali
+                '804'   => [981, 982], // Banjarmasin
+                '801'   => [983, 984], // Samarinda
+                '805'   => [985, 986, 987], // Makassar
+                '802'   => [988, 989], // Manado
+                '806'   => [990, 991, 992], // Yogya
+                '813'   => [993, 994, 995, 996, 997, 998, 999], // Jakarta MUP
+                '1008'  => [1000, 1001, 1002, 1003, 1004, 1005], // Jakarta SO
+                '811'   => [1006, 1007], // Jabar
+            ];
+            
+            foreach ($associations as $key => $item)
+            {
+                if (in_array($TLID, $item))
+                {
+                    $TLIDs[] = $key;
+                }
+            }
+            
+            // Set primary tlid
+            $TLIDs[] = $TLID;
+            
+            // Check if TL has branch
+            $branch = $this->branch->getByPromotor($TLIDs[0]);
+            
+            
+            // Check if TL has account
+            if ($branch)
+            {
+                $type       = 'branch';
+                
+                // Quickfix Jakarta SO
+                if ($TLIDs[0] === 1008)
+                {
+                    // Set branch ID
+                    $branchID = $branch->ID;
+                    $TLID = $TLIDs[0];
+                    $type = '';
+                }
+            }
+            else
+            {
+                $account = $this->dealer_account->getByPromotor($TLID);
+                
+                if (!$account) 
+                {
+                    return response()->json(['error' => 'no-data']);
+                }
+                
+                $type       = 'account';
+            }
+        }
+
+        //set time YYYY-MM
+        $time = date('Y-m', time());
+
+        $dataAccount = [];
+        
+        // Get single branch data
+        if ($type === 'branch')
+        {
+            $target = $this->report->getTargetSalesBranchByTL($TLIDs, $time);
+            $sales  = $this->report->getSalesBranchByTL($TLIDs, $time);
+        }
+        else if ($type === 'account') // Get account data
+        {
+            $target = $this->report->getTargetSalesAccountByTL($TLID, $time);
+            $sales  = $this->report->getSalesAccountByTL($TLID, $time);
+        }
+        else
+        {
+            $target = $this->report->getTargetSalesAccountByBranchTL($branchID, $TLID, $time);
+            $sales  = $this->report->getSalesAccountByBranchTL($branchID, $TLID, $time);
+        }
+        
+        foreach ($target as $item)
+        {
+            $total = 0;
+            
+            if ($item->total !== null)
+            {
+                $total = $item->total;
+            }
+            
+            $dataAccount[$item->ID] = [
+                'ID'            => $type.'-'.$item->ID, 
+                'name'          => $item->name,
+                'target'        => $total,
+                'sales'         => 0,
+                'persentase'    => 0,
+            ];
+        }
+        
+        foreach ($sales as $item)
+        {
+            
+            $salesData  = 0;
+            
+            if ($item->total !== null)
+            {
+                $salesData = $item->total;   
+            }
+            
+            $dataAccount[$item->ID]['sales'] = number_format($item->total);
+            $targetData = $dataAccount[$item->ID]['target'];
+            
+            if($salesData != 0 && $targetData != 0)
+            {
+                $dataAccount[$item->ID]['persentase'] = round(( $salesData / $targetData) * 100, 2);
+            }
+        }
+        
+        // Set response data
+        $responseData = [
+            'type'      => $type,
+            'result'    => $dataAccount
+        ];
+        
+        // Check if branch has account or not
+        $accounts = $this->dealer_account->getByBranch($branchID);
+        
+        if (!$accounts && $branchID !== 0) 
+        {
+            $responseData['skip'] = true;
+        }
+        
+        return response()->json($responseData);
+    }
+    
+    /**
+     * HANDLE SALES Dealer (TL)
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function getSalesDealer(Request $request)
+    {
+        // Validate parameter
+        $token      = $request->get('token', false);
+        $accountID  = $request->get('accountID', false);
+
+        if (!$token)
+        {
+            return response()->json(['error' => 'no-token']);
+        }
+        
+        if (!$accountID)
+        {
+            return response()->json(['error' => 'no-account']);
+        }
+        
+        $promotorID = $this->token->decode($token);
+        $promotor   = $this->promotor->getOne($promotorID);
+        
+        if (!$promotor)
+        {
+            return response()->json(['error' => 'no-auth']);
+        }
+        
+        $paramData = explode('-', $accountID);
+        $accountID = $paramData[1];
+
+        // Define default dealer
+        $branchID = 0;
+        
+        if (in_array('branch', $paramData))
+        {
+            $branchID = $paramData[1];
+        }
+
+        //set time YYYY-MM
+        $time = date('Y-m', time());
+
+        $dataDealer = [];
+        
+        if ($branchID !== 0)
+        {
+            $dealers = $this->dealer->getByBranch($branchID);
+        }
+        else
+        {
+            $dealers = $this->dealer->getByAccount($accountID);
+        }
+        
+        // Complied data target
+        foreach ($dealers as $key => $value) 
+        {
+            //get target dealer by user
+            $targetDealer = $this->report->getTargetSalesDealer($value->ID, $time);
+
+            $total = 0;
+            // calculate total target
+            foreach ($targetDealer as $row) 
+            {
+                $total += $row->total;
+            }
+
+            //marge data
+            $dataDealer[$value->ID] = [
+                'ID'        => $value->ID ,
+                'name'      => $value->name ,
+                'target'    => $total,
+                'persentase' => 0,
+            ];
+        }
+
+        // Compiled data sales
+        foreach ($dealers as $key => $value) 
+        {
+            //get sales dealer by user
+            $salesDealer = $this->report->getSalesDealer($value->ID);
+
+            $total = 0 ;
+            //calculate total sales
+            foreach ($salesDealer as $row) 
+            {
+                $total += $row->price * $row->quantity;
+            }
+            
+            // Merge data
+            $dataDealer[$value->ID]['sales'] = $total;
+        }
+
+        // Compiled data dealer
+        foreach ($dataDealer as $key => $value) 
+        {
+            if ($value['sales'] > 0 && $value['target'] > 0 )
+            {
+                $dataDealer[$key]['persentase'] = round(( $value['sales'] / $value['target'] ) * 100, 2);
+            }
+            
+            $dataDealer[$key]['sales'] = number_format($dataDealer[$key]['sales']);
+        }
+
+        return response()->json(['result' => $dataDealer]);
+    }
+
+    /**
+     * HANDLE SALES PROMOTOR
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function getSalesPromotor(Request $request)
+    {
+        // Validate parameter
+        $token      = $request->get('token', false);
+        $dealerID   = $request->get('dealerID', false);
+        
+        if (!$token)
+        {
+            return response()->json(['error' => 'no-token']);
+        }
+
+        if (!$dealerID)
+        {
+            return response()->json(['error' => 'no-dealerID']);
+        }
+        
+        $promotorID = $this->token->decode($token);
+        $promotor   = $this->promotor->getOne($promotorID);
+        
+        if (!$promotor)
+        {
+            return response()->json(['error' => 'no-auth']);
+        }
+
+        //set time YYYY-MM
+        $time = date('Y-m', time());
+
+        $dataPromotor = [];
+
+        // Get promotor by dealer
+        $dataDealer = $this->promotor->getByDealer($dealerID);
+        
+        // Compiled data target
+        foreach ($dataDealer as $key => $value) 
+        {
+            // Get target promotor by user
+            $targetPromotor = $this->report->getTargetSalesPromotor($value->ID, $time);
+
+            $total = 0;
+            
+            // Calculate total target
+            foreach ($targetPromotor as $row) 
+            {
+                $total += $row->total;
+            }
+
+            // Merge data
+            $dataPromotor[$value->ID] = [
+                'ID'        => $value->ID ,
+                'name'      => $value->name ,
+                'target'    => $total,
+                'persentase' => 0,
+            ];
+        }
+
+        // Compiled data sales
+        foreach ($dataDealer as $key => $value) 
+        {
+            // Get sales promotor by user
+            $salesPromotor = $this->report->getSalesPromotor($value->ID);
+
+            $total = 0;
+            
+            // Calculate total sales
+            foreach ($salesPromotor as $row) 
+            {
+                $total += $row->price * $row->quantity;
+            }
+            
+            // Merge data
+            $dataPromotor[$value->ID]['sales'] = $total;
+        }
+
+        // Complied data promotor
+        foreach ($dataPromotor as $key => $value) 
+        {
+            
+            if($value['sales'] > 0 && $value['target'] > 0 )
+            {
+                $dataPromotor[$key]['persentase'] = round(( $value['sales'] / $value['target'] ) * 100, 2);
+            }
+            
+            $dataPromotor[$key]['sales'] = number_format($dataPromotor[$key]['sales']);
+        }
+        
+        return response()->json(['result' => $dataPromotor]);
+    }
+
+    /**
+     * HANDLE SALES PROMOTOR
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function getSalesPromotorDetail(Request $request)
+    {
+        // Validate parameter
+        $token      = $request->get('token', false);
+        $promotorID = $request->get('promotorID', false);
+
+        if (!$token)
+        {
+            return response()->json(['error' => 'no-token']);
+        }
+        
+        if (!$promotorID)
+        {
+            return response()->json(['error' => 'no-promotorID']);
+        }
+
+        $currentPromotorID  = $this->token->decode($token);
+        $promotor           = $this->promotor->getOne($currentPromotorID);
+        
+        if (!$promotor)
+        {
+            return response()->json(['error' => 'no-auth']);
+        }
+
+        //set time YYYY-MM
+        $time = date('Y-m', time());
+
+        $promotorReportData = $this->report->getReportPromotorByMonth($promotorID, $time);
+
+        return response()->json(['result' => $promotorReportData]);
+    }
+
+    /**
+     * Check if no sales already reported
+     *
+     * @access public
+     * @param Request $request
+     * @return Response
+     */
+    public function checkNoSales(Request $request)
+    {
+        // Validate parameter
+        $token  = $request->get('token', false);
+        
+        if (!$token)
+        {
+            return response()->json(['error' => 'no-token']);
+        }
+
+        $promotorID = $this->token->decode($token);
+        $promotor   = $this->promotor->getOne($promotorID);
+
+        if (!$promotorID)
+        {
+            return response()->json(['error' => 'no-auth']);
+        }
+
+        // SET DATE
+        $date = date('Y-m-d');
+
+        // CHECK DATA ABSENCE
+        $reportSaleData = $this->report_sale->getData($promotorID, $date);
+        $reportExists   = 1;
+        
+        if(!$reportSaleData)
+        {
+            $reportExists = 0;
+        }
+        
+        return response()->json(['result' => $reportExists]);
+    }
+    
+    /**
+     * Handle no sales report
+     *
+     * @access public
+     * @param Request $request
+     * @return Response
+     */
+    public function handleNoSales(Request $request)
+    {
+        // Validate parameter
+        $token  = $request->get('token', false);
+        $date  = $request->get('date', false);
+        
+        if (!$token)
+        {
+            return response()->json(['error' => 'no-token']);
+        }
+        
+        // Validate user
+        $promotorID = $this->token->decode($token);
+        $promotor   = $this->promotor->getOne($promotorID);
+        
+        if (!$promotorID)
+        {
+            return response()->json(['error' => 'no-auth']);
+        }
+
+        // Date = 1 Today , 0 = Yesterday
+        if ($date == 1)
+        {
+            $date = Carbon::now();
+        }
+        else if ($date == 0)
+        {
+            $date = Carbon::yesterday();
+        }
+
+        // GET TL ID , ARCO ID 
+        $dealer_ID      = $promotor->dealer_ID;
+        //Get one dealer
+        $dealer         = $this->dealer->getOne($dealer_ID);
+        
+        $account_ID = 0;
+        
+        //Get ID account
+        $dealer_account = $this->dealer_account->getOne($dealer->dealer_account_ID);
+        
+        if ($dealer_account)
+        {
+            $account_ID     = $dealer_account->ID;
+        }
+        
+        $tl_ID          = $promotor->parent_ID;
+        $tl             = $this->promotor->getOne($tl_ID);
+
+        $arco_ID        = $tl->parent_ID;
+
+        // Set data
+        $data = [
+            'promotor_ID'   => $promotor->ID,
+            'dealer_ID'     => $dealer_ID,
+            'account_ID'    => $account_ID,
+            'tl_ID'         => $tl_ID,
+            'arco_ID'       => $arco_ID,
+            'date'          => $date,
+        ];
+
+        //CHECK DATA ABSENCE
+        $this->report_sale->create($data);
+        
+        return response()->json(['result' => 'success']);
+    }
+
+}

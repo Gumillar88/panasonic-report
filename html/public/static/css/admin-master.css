@@ -1,0 +1,569 @@
+
+/**
+ * Admin site master style
+ */
+
+/* Structure */
+body {
+    background: #eee;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 160%;
+    width: 1024px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Roboto', sans-serif;
+    line-height: 200%;
+    margin: 0;
+}
+
+h1 {
+    font-size: 38px;
+}
+
+h2 {
+    font-size: 32px;
+}
+
+h3 {
+    font-size: 28px;
+}
+
+h4 {
+    font-size: 24px;
+}
+
+h5 {
+    font-size: 20px;
+}
+
+h6 {
+    font-size: 16px;
+}
+
+p {
+    margin:10px;
+}
+
+a {
+    cursor:pointer !important;
+}
+
+/* Class helper */
+.text-center {
+    text-align:center;
+}
+
+.text-left {
+    text-align:left;
+}
+
+.text-right {
+    text-align:right;
+}
+
+.hide {
+    display:none;
+}
+
+.clear {
+    clear:both;
+}
+
+.half {
+    width:50%;
+}
+
+/* Button */
+.btn {
+    position: relative;
+    vertical-align: top;
+    line-height:35px;
+    padding: 7px 15px;
+    color: #fff !important;
+    text-align: center;
+    background: #aaa;
+    border: 0;
+    border-radius:2px;
+    cursor:pointer;
+}
+
+.btn:hover {
+    background:#bbb;
+    color:#fff;
+    text-decoration:none;
+}
+
+.btn:active {
+    outline: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    background:#777;
+}
+
+.btn-red {
+    background: #ef4437;
+}
+
+.btn-red:hover {
+    background: #f25e53;
+}
+
+.btn-red:active {
+    background: #ed291b;
+}
+
+.btn-green {
+    background: #27ae60;
+}
+
+.btn-green:hover {
+    background: #2ed072;
+}
+
+.btn-green:active {
+    background: #1f8d4e;
+}
+
+input.btn {
+    line-height:18px;
+}
+
+/* Note */
+.note {
+    background:#ccc;
+    color:#fff;
+    margin:10px;
+    padding:10px;
+    font-size:14px;
+    line-height:130%;
+}
+
+.note.error {
+    background:#ef3123;
+}
+
+.note.success {
+    background: #24ab20;
+}
+
+form .note {
+    margin:10px 0;
+}
+
+/* Header */
+header {
+    width:1024px;
+    margin:0 auto;
+    padding:20px;
+}
+
+header img {
+    width: 300px;
+}
+
+/* Page */
+.page {
+    width:1024px;
+    margin:0 auto;
+}
+
+/* List Page */
+#navbar, #content {
+    float:left;
+    margin:5px;
+    -webkit-box-shadow: 1px 1px 5px 0px #ccc;
+    box-shadow: 1px 1px 5px 0px #ccc;
+}
+
+
+/* Navigation Bar */
+#navbar {
+    position: relative;
+    width: 200px;
+    height: auto;
+    z-index: 10;
+}
+
+#navbar span {
+    position: relative;
+    display: block;
+    margin: 0;
+    padding: 10px;
+    background: #e6262b;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    display: none;
+}
+
+#navbar span i {
+    font-size: 18px;
+    margin-right: 10px;
+}
+
+#navbar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    -webkit-transition: all 0.5s;
+    transition: all 0.5s;
+}
+
+/* Prevent random blink event on fast hover */
+#navbar > ul {
+    background-color: #e6262b;
+}
+
+#navbar ul li {
+    position: relative;
+}
+
+#navbar ul li a {
+    position: relative;
+    display: block;
+    text-align: left;
+    width: 100%;
+    background: #e6262b;
+    color: #fff;
+    font-weight: bold;
+    padding: 10px 15px;
+    text-decoration: none;
+    -webkit-transition: all 0.7s;
+    transition: all 0.7s;
+}
+
+#navbar ul li a:hover {
+    text-decoration: none;
+    background: #fff;
+    color: #e6262b;
+    border-bottom: 1px solid #fff;
+}
+
+#navbar ul li a .fa {
+    position: absolute;
+    right: 15px;
+    top: 14px;
+}
+
+#navbar ul li > a {
+    z-index: 1;  
+    border-bottom: 1px solid #e6262b;
+}
+
+#navbar ul ul {
+    -webkit-transition: all 0.5s;
+    transition: all 0.5s;
+    position: absolute;
+    left: 0%;
+    top: 0px;
+    width: 200px;
+    border-left: 1px solid #fff;
+    box-shadow: 1px 1px 15px 0px #ccc;
+    opacity: 0;
+    z-index: -1;
+}
+
+#navbar ul li.expanded > a {
+    border-bottom: 1px solid #fff;
+}
+
+#navbar ul li.expanded ul {
+    left: 100%;
+    opacity: 1;
+    z-index: 0;
+}
+
+#navbar ul li.selected > a {
+    color: #e6262b;
+    background-color: #fff;
+    border-top: 1px solid #e6262b;
+}
+
+#navbar ul li.selected ul {
+    position: relative;
+    opacity: 1;
+    border: none;
+    box-shadow: none;
+    top: initial;
+    left: initial;
+    width: 100%;
+    border-bottom: 1px solid #fff;
+    z-index: 0;
+}
+
+#navbar ul li.selected ul a {
+    padding-left: 30px;
+}
+
+
+
+/* Content page */
+#content {
+    float:left;
+    background:#fff;
+    width:800px;
+    height: auto;
+    padding:20px;
+}
+
+#content.small {
+    width: 300px;
+}
+
+#content h1 {
+    line-height:100%;
+    padding:10px;
+    font-weight:normal;
+    border-bottom:1px solid #ccc;
+}
+
+#content h1 span {
+  font-size:14px;
+  line-height:100%;
+  color:#ccc;
+  margin:10px;
+}
+
+#content > div, #content > form {
+  margin:20px;
+}
+
+#content form {
+    width: 350px;
+}
+
+#content form .part {
+  margin-bottom: 30px; 
+}
+
+#content form .part h3 {
+  font-weight: normal;
+  color: #aaa;
+  font-size: 26px;
+}
+
+/* Small Content */
+#content.small {
+  float: none;
+  width: 300px;
+  margin: 10px auto;
+  padding: 15px;
+}
+
+#content.small h1 {
+  font-size: 24px;
+}
+
+#content.small form {
+    width: 230px;
+}
+
+/**
+ * Form
+ */
+
+.grab {
+    cursor: move;
+}
+
+form img {
+    display: block;
+    margin-bottom: 10px;
+}
+
+
+/* Modal */
+.modal {
+    position:fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.modal .background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.modal .container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -150px;
+    margin-top: -100px;
+    width: 300px;
+    height: 200px;
+    background: #fff;
+}
+
+.modal .container h2 {
+    padding: 0px 15px;
+    font-size: 24px;
+    border-bottom: 1px solid #ccc;
+}
+
+.modal .container .fa-close {
+  position: absolute;
+  top:0;
+  right: 0;
+  font-size: 25px;
+  margin: 10px;
+  cursor: pointer;
+}
+
+/* Error 404 */
+#notFound {
+  margin: 10px auto 50px;
+  text-align: center;
+}
+
+#notFound h1 {
+  font-size: 150px;
+  color: #aaa;
+}
+
+#notFound h2 {
+  font-size: 30px;
+  color: #aaa;
+}
+
+/**
+ * Responsive stuff
+ */
+@media all and (max-width:64em) { /* 1024px */
+
+    /* Structure */
+    body {
+        width:100%;
+    }
+
+    header, .page {
+        width:90%;
+    }
+
+    #navbar {
+        width:25%;
+    }
+
+    #content {
+        width:70%;
+    }
+
+    .half {
+      width:75%;
+    }
+
+    /* Table */
+    table.dataTable {
+      display:block;
+      padding-bottom:10px;
+      overflow-x:scroll !important;
+      width:100% !important;
+    }
+
+}
+
+@media all and (max-width:45em) { /* 720px */
+    
+    body {
+        padding: 10px;    
+    }
+    
+    /* Structure */
+    .half {
+        width:85%;
+    }
+
+    #navbar, #content {
+        width:100%;
+        margin: 0px;
+    }
+
+    #content > div,
+    #content > form {
+        margin:5% 2.5%;
+    }
+
+    h1 {
+        font-size: 30px;
+    }
+
+    h2 {
+        font-size: 24px;
+    }
+
+    h3 {
+        font-size: 20px;
+    }
+
+    h4, h5, h6 {
+        font-size: 16px;
+    }
+
+    /* Navigation Bar */
+    #navbar {
+        margin-bottom: 10px;
+    }
+    
+    #navbar span {
+      display: block;
+    }
+
+    #navbar ul {
+        height: 0px;
+        border-top: 1px solid #e6262b;
+        overflow: hidden;
+    }
+    
+    #navbar ul ul {
+        position: relative;
+        top: initial;
+        left: initial;
+        width: 100%;
+        border-left: none;
+        box-shadow: none;
+        z-index: 0;
+        opacity: 1;
+        height: 0px;
+        overflow: hidden;
+    }
+    
+    #navbar ul.expanded {
+        border-top: 1px solid #fff;
+    }
+    
+    #navbar ul li a:hover {
+        background: #e6262b;
+        color: #fff;
+        border-bottom: 1px solid #e6262b;
+    }
+    
+    #navbar ul li.expanded > a {
+        color: #e6262b;
+        background-color: #fff;
+    }
+    
+    #navbar ul li.expanded ul {
+        left: initial;
+        opacity: 1;
+        z-index: 0;
+        height: 100%;
+        border-bottom: 1px solid #fff;
+    }
+    
+    #navbar ul li.expanded ul a {
+        padding-left: 30px;
+    }
+    
+}

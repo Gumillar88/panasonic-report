@@ -1,0 +1,443 @@
+<?php
+
+namespace App\Http\Controllers\API\V_1_4_0;
+
+use Image;
+use Storage;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Http\Models\DealerModel;
+use App\Http\Models\PromotorModel;
+use App\Http\Models\PromotorMetaModel;
+use App\Http\Models\NewsModel;
+use App\Http\Models\DealerNewsModel;
+use App\Http\Models\TokenModel;
+
+class NewsController extends Controller
+{
+    /**
+     * Dealer model container
+     *
+     * @access protected
+     */
+    protected $dealer;
+    
+    /**
+     * Promotor model container
+     *
+     * @access protected
+     */
+    protected $promotor;
+
+    /**
+     * Promotor meta model container
+     *
+     * @access protected
+     */
+    protected $promotor_meta;
+    
+    /**
+     * News model container
+     *
+     * @access protected
+     */
+    protected $news;
+    
+    /**
+     * Dealer news model container
+     *
+     * @access protected
+     */
+    protected $dealerNews;
+    
+    /**
+     * Token model container
+     *
+     * @access protected
+     */
+    protected $token;
+    
+    /**
+     * Object constructor
+     *
+     * @access public
+     * @return Void
+     */
+    public function __construct()
+    {
+        $this->dealer           = new DealerModel();
+        $this->promotor         = new PromotorModel();
+        $this->promotor_meta    = new PromotorMetaModel();
+        $this->news             = new NewsModel();
+        $this->dealerNews       = new DealerNewsModel();
+        $this->token            = new TokenModel();
+    }
+    
+    /**
+     * Get list of the news
+     *
+     * @access public
+     * @param Request $request
+     * @return Response
+     */
+    public function getList(Request $request)
+    {
+        // Validate parameter
+        $token      = $request->get('token', false);
+        $timestamp  = $request->get('timestamp', time());
+        
+        if (!$token)
+        {
+            return response()->json(['error' => 'no-token']);
+        }
+        
+        // Validate user
+        $promotorID = $this->token->decode($token);
+        $promotor   = $this->promotor->getOne($promotorID);
+        
+        if (!$promotorID)
+        {
+            return response()->json(['error' => 'no-auth']);
+        }
+        
+        // Get data
+        $news = $this->news->getPagination((int) $timestamp);
+
+        // get news from promotor meta
+        $promotor_meta = $this->promotor_meta->get($promotorID,'news');
+
+        //check promotor meta news available
+        //if not available , create promotor news meta
+        if(!$promotor_meta)
+        {
+            $this->promotor_meta->set($promotorID, 'news', '[]');
+        }
+        
+        $newsData = [];
+        
+        // Set default dealer id
+        // Get dealer ID
+        $dealerIDs = [0];
+        
+        if ($promotor->type === 'promotor')
+        {
+            $dealerIDs[] = [$promotor->dealer_ID];
+        }
+        
+        if (in_array($promotor->type, ['tl', 'arco']))
+        {
+            // Default teamleader id
+            $TLIDs = [$promotor->ID];
+            
+            if ($promotor->type === 'arco')
+            {
+                $teamLeaders = $this->promotor->getByParent([$promotor->ID]);
+                $TLIDs = [];
+                
+                foreach ($teamLeaders as $teamLeader)
+                {
+                    $TLIDs[] = $teamLeader->ID;
+                }
+            }
+            
+            $dealers = $this->dealer->getByTeamLeader($TLIDs);
+
+            foreach ($dealers as $dealer)
+            {
+                $dealerIDs[] = $dealer->ID;
+            }
+        }
+        
+        // Get news data
+        if ($promotor->type === 'panasonic')
+        {
+            $newsData = $this->news->getPagination($timestamp);
+            $newsData = array_reverse($newsData);
+        }
+        else
+        {
+            // Get raw news id
+            $newsIDRaw  = $this->dealerNews->getPagination($dealerIDs, $timestamp);
+            $newsIDs    = [];
+            
+            // Compile news id
+            foreach ($newsIDRaw as $newsRaw)
+            {
+                $newsIDs[] = $newsRaw->news_ID;
+            }
+            
+            $newsData   = $this->news->getMany($newsIDs);
+        }
+        
+        // Decode promotor meta news
+        $promotor_news = json_decode($promotor_meta);
+        
+
+        // Add atribute READ and check from promotor meta already read or not
+        foreach ($newsData as $key => $row) {
+            
+            //set news unread
+            $newsData[$key]->read = 0;
+
+            //check promotor news available
+            if($promotor_news)
+            {
+                if(in_array($row->ID, $promotor_news))
+                {
+                    $newsData[$key]->read = 1;
+                }
+            }
+            
+        }
+        
+        return response()->json(['result' => $newsData]);
+        
+    }
+
+    /**
+     * Get total news
+     * @param  Request $request 
+     * @return response
+     */
+    public function getListTotal(Request $request) 
+    {
+        // Validate parameter
+        $token      = $request->get('token', false);
+        
+        if (!$token)
+        {
+            return response()->json(['error' => 'no-token']);
+        }
+        
+        // Validate user
+        $promotorID = $this->token->decode($token);
+        $promotor   = $this->promotor->getOne($promotorID);
+        
+        if (!$promotorID)
+        {
+            return response()->json(['error' => 'no-auth']);
+        }
+
+        // get news from promotor meta
+        $promotor_meta = $this->promotor_meta->get($promotorID, 'news');
+
+        $promotor_news = json_decode($promotor_meta);
+        
+        if (is_null($promotor_news))
+        {
+            $promotor_news = [];
+        }
+        
+        // Set default dealer id
+        $dealerIDs = [0];
+        
+        if ($promotor->type === 'promotor')
+        {
+            $dealerIDs[] = [$promotor->dealer_ID];
+        }
+        
+        if (in_array($promotor->type, ['tl', 'arco']))
+        {
+            // Default teamleader id
+            $TLIDs = [$promotor->ID];
+            
+            if ($promotor->type === 'arco')
+            {
+                $teamLeaders = $this->promotor->getByParent([$promotor->ID]);
+                $TLIDs = [];
+                
+                foreach ($teamLeaders as $teamLeader)
+                {
+                    $TLIDs[] = $teamLeader->ID;
+                }
+            }
+            
+            $dealers = $this->dealer->getByTeamLeader($TLIDs);
+
+            foreach ($dealers as $dealer)
+            {
+                $dealerIDs[] = $dealer->ID;
+            }
+        }
+        
+        // Get news data
+        if ($promotor->type === 'panasonic')
+        {
+            $newsData = $this->news->getAll();
+        }
+        else
+        {
+            // Get raw news id
+            $newsData  = $this->dealerNews->getAll($dealerIDs);
+        }
+        
+        // Calculate total unread
+        $totalUnread = count($newsData) - count($promotor_news);
+        
+        return response()->json(['result' => $totalUnread]);
+    }
+    
+    /**
+     * Get one news
+     *
+     * @access public
+     * @param Request $request
+     * @return Response
+     */
+    public function getView(Request $request)
+    {
+        // Validate parameter
+        $token  = $request->get('token', false);
+        $newsID = $request->get('newsID', false);
+        
+        if (!$newsID)
+        {
+            return response()->json(['error' => 'no-news-id']);
+        }
+        
+        if (!$token)
+        {
+            return response()->json(['error' => 'no-token']);
+        }
+        
+        // Validate user
+        $promotorID = $this->token->decode($token);
+        $promotor   = $this->promotor->getOne($promotorID);
+        
+        if (!$promotorID)
+        {
+            return response()->json(['error' => 'no-auth']);
+        }
+        
+        // Get article
+        $article = $this->news->getOne($newsID);
+        
+        if (!$article)
+        {
+            return response()->json(['error' => 'no-article']);
+        }
+
+        // Set promotor meta read
+        //get news from promotor meta
+        $promotor_meta = $this->promotor_meta->get($promotorID,'news');
+
+        $promotor_news = json_decode($promotor_meta);
+
+        if(!in_array( $newsID,$promotor_news))
+        {
+            // Add new id to array
+            $promotor_news[] = (int)$newsID;
+            
+            //json encode
+            $promotor_news = json_encode($promotor_news);
+            
+            //save to promotor meta , news already read
+            $this->promotor_meta->set($promotorID,'news',$promotor_news);
+        }
+        
+        // Set new data
+        $data = [
+            'ID'            => $article->ID,
+            'title'         => $article->title,
+            'content'       => $article->content,
+            'author_name'   => 'admin',
+            'created'       => $article->created,
+        ];
+        
+        if ($article->created_by != 0)
+        {
+            $author = $this->promotor->getOne($article->created_by);
+            $data['author_name'] = $author->name;
+        }
+        
+        
+        return response()->json(['result' => $data]);
+    }
+
+    /**
+     * Handle create new news request
+     *
+     * @access public
+     * @param Request $request
+     * @return Response
+     */
+    public function create(Request $request)
+    {
+        // Validate parameter
+        $token      = $request->get('token', false);
+        $title      = $request->get('title', false);
+        $content    = $request->get('content', false);
+
+        if (!$token)
+        {
+            return response()->json(['error' => 'no-token']);
+        }
+
+        if (!$title)
+        {
+            return response()->json(['error' => 'no-title']);
+        }
+
+        if (!$content)
+        {
+            return response()->json(['error' => 'no-content']);
+        }
+        
+        // Validate user
+        $promotorID = $this->token->decode($token);
+        $promotor   = $this->promotor->getOne($promotorID);
+        
+        if (!$promotorID)
+        {
+            return response()->json(['error' => 'no-auth']);
+        }
+        
+        $dealerIDs = [];
+        
+        if ($promotor->type === 'promotor')
+        {
+            $dealerIDs[] = $promotor->dealer_ID;
+        }
+        
+        if (in_array($promotor->type, ['tl', 'arco']))
+        {
+            // Default teamleader id
+            $TLIDs = [$promotor->ID];
+            
+            if ($promotor->type === 'arco')
+            {
+                $teamLeaders = $this->promotor->getByParent([$promotor->ID]);
+                $TLIDs = [];
+                
+                foreach ($teamLeaders as $teamLeader)
+                {
+                    $TLIDs[] = $teamLeader->ID;
+                }
+            }
+            
+            $dealers = $this->dealer->getByTeamLeader($TLIDs);
+            
+            foreach ($dealers as $dealer)
+            {
+                $dealerIDs[] = $dealer->ID;
+            }
+        }
+        
+        // Save data
+        $ID = $this->news->create($title, $content, $promotor->ID);
+        
+        // Save dealer news
+        $this->dealerNews->set($ID, $dealerIDs);
+        
+        if ($request->hasFile('image'))
+        {
+            // Convert image
+            $image = (string) Image::make($request->file('image'))->encode('jpg', 80);
+            Storage::put('/news/'.$ID.'.jpg', $image, 'public');
+        }
+        
+        // Return success
+        return response()->json(['result' => 'success']);
+    }
+    
+}

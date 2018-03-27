@@ -1,0 +1,137 @@
+<?php
+
+namespace App\Http\Controllers\API\V_1_4_0;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Http\Models\PromotorModel;
+use App\Http\Models\PromotorMetaModel;
+use App\Http\Models\AbsenceModel;
+use App\Http\Models\TokenModel;
+
+class AbsenceController extends Controller
+{
+    /**
+     * Promotor model container
+     *
+     * @access protected
+     */
+    protected $promotor;
+
+    /**
+     * Promotor meta model container
+     *
+     * @access protected
+     */
+    protected $promotor_meta;
+    
+    /**
+     * News model container
+     *
+     * @access protected
+     */
+    protected $absence;
+    
+    /**
+     * Token model container
+     *
+     * @access protected
+     */
+    protected $token;
+    
+    /**
+     * Object constructor
+     *
+     * @access public
+     * @return Void
+     */
+    public function __construct()
+    {
+        $this->promotor         = new PromotorModel();
+        $this->promotor_meta    = new PromotorMetaModel();
+        $this->absence          = new AbsenceModel();
+        $this->token            = new TokenModel();
+    }
+
+    /**
+     * Check data absence promotor
+     *
+     * @access public
+     * @param Request $request
+     * @return Response
+     */
+    public function checkData(Request $request)
+    {
+        // Validate parameter
+        $token  = $request->get('token', false);
+        
+        if (!$token)
+        {
+            return response()->json(['error' => 'no-token']);
+        }
+        
+        // Validate user
+        $promotorID = $this->token->decode($token);
+        $promotor   = $this->promotor->getOne($promotorID);
+        
+        if (!$promotorID)
+        {
+            return response()->json(['error' => 'no-auth']);
+        }
+        
+        //SET DATE
+        $date = date('Y-m-d', time());
+
+        //CHECK DATA ABSENCE
+        $absenceData = $this->absence->get($promotorID, $date);
+
+        if(!$absenceData)
+        {
+            $absenceData = 0;
+        }
+        else
+        {
+            $absenceData = 1;
+        }
+        
+        return response()->json(['result' => $absenceData]);
+    }
+
+    /**
+     * Create absence
+     *
+     * @access public
+     * @param Request $request
+     * @return Response
+     */
+    public function create(Request $request)
+    {
+        // Validate parameter
+        $token  = $request->get('token', false);
+        $action = $request->get('action', false);
+        
+        if (!$token)
+        {
+            return response()->json(['error' => 'no-token']);
+        }
+        
+        // Validate user
+        $promotorID = $this->token->decode($token);
+        $promotor   = $this->promotor->getOne($promotorID);
+        
+        if (!$promotorID)
+        {
+            return response()->json(['error' => 'no-auth']);
+        }
+        
+        //SET DATE
+        $date = date('Y-m-d', time());
+
+        //CHECK DATA ABSENCE
+        $absenceData = $this->absence->create($promotorID, $action, $date);
+        
+        return response()->json(['result' => 'success']);
+    }
+
+    
+}
